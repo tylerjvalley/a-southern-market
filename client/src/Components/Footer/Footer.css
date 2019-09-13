@@ -1,0 +1,66 @@
+.logo {
+    font-family: 'Indie Flower', cursive;
+    border: 2px solid black;
+    padding: 2.5em;
+    border-radius: 50%;
+    background: #fff0f5;
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo h1 {
+    position: relative;
+    white-space: nowrap;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.site-footer {
+    margin-top: 10em;
+    background:#8d8d83;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    
+}
+
+.newsletter {
+    width: 25%;
+
+}
+
+.newsletter h4 {
+    font-size: 1.2em;
+}
+
+.newsletter h4, .form-group label {
+    font-family: 'Montserrat', sans-serif;
+} 
+
+
+
+@media (max-width: 801px) {
+    
+}
+@media (max-width: 652px) { .logo h1 {font-size: .8em;}}
+
+
+@media (max-width: 560px) {
+    .logo {
+        margin: 1em;
+    }
+
+    .newsletter h4 {
+        font-size: .8em;
+    }
+
+    .newsletter .form-group .form-label {
+        font-size: .8em;
+    }
+}
+
+@media (max-width: 510px) { .logo h1 {font-size: .7em;}}
+@media (max-width: 454px) { .logo h1 {font-size: .6em;}}

@@ -1,0 +1,89 @@
+.new-arrivals-carousel {
+    padding: 50px;
+    background: #cacabe;
+}
+
+.new-arrivals-carousel .carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.new-arrivals-carousel .carousel-item .btn {
+    background: transparent;
+    border: 1px solid #00ced1;
+}
+
+.new-arrivals-carousel .carousel-item .btn:hover {
+    background: #00ced1;
+}
+
+
+
+.new-arrivals-card {
+    width: 18rem;
+    height: 18rem;
+    border-radius: 10%;
+    margin: 1em;
+    text-align: center;
+    background-position: center; 
+}
+
+
+.new-arrivals-card .card-title {
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+.new-arrivals-card .card-body {
+    padding-top: 5em;
+   
+}
+
+@media (max-width: 890px) {
+    .new-arrivals-card .card-title {
+        font-size: 15px;
+    }
+
+    .new-arrivals-card .btn {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 580px) {
+
+    .new-arrivals-carousel {
+        padding: 0;
+    }
+
+    .new-arrivals-card {
+        height: 12rem;
+        border-radius: 5%;
+        margin: 0;
+    }
+    .new-arrivals-card .card-title {
+        font-size: 10px;
+    }
+
+    .new-arrivals-card .btn {
+        font-size: 10px;
+        padding: 0;
+    }
+
+    .new-arrivals-card .card-body {
+        padding: 0;
+        margin-top: 5em;
+    }
+
+    .new-arrivals-card hr {
+        display: none;
+    }
+}
+

@@ -1,0 +1,64 @@
+.state-carousel {
+    background: #cacabe;
+}
+
+.state-carousel carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.state-carousel .carousel-item .btn {
+    background: transparent;
+    border: 1px solid #00ced1;
+}
+
+.state-carousel .carousel-item .btn:hover {
+    background: #00ced1;
+}
+
+.states-button {
+    margin-top: 8em;
+}
+
+
+.state-card {
+    width: 18rem;
+    height: 18rem;
+    border-radius: 5%;
+    text-align: center;
+    margin: 1em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.state-card .card-title {
+    color: black;
+    font-family: 'Indie Flower', cursive;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+.state-card .card-body {
+    padding-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+
+@media (max-width: 420px) {
+    .state-card {
+        margin: 0;
+    }
+}
+
+
+

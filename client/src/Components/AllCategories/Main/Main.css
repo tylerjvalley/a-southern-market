@@ -1,0 +1,28 @@
+.categories-page-products {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.product {
+    width: 18rem;
+    height: 18rem;
+    text-align: center;
+    margin: 1em;
+    background-position: center;
+
+}
+
+.product .card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: .75rem;
+}
+
+.product hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    
+}
