@@ -1,0 +1,18 @@
+.register-page-top {
+    margin-top: 2em;
+}
+
+.register-page-top h1 {
+    text-align: center;
+
+}
+
+.register-page-top .back-button-reg {
+    max-width: 8em;
+    margin-left: 10px;
+}
+
+.register-page-top .back-button-reg button {
+    width: 5em;
+   
+}

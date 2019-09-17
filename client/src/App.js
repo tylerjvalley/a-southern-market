@@ -5,6 +5,7 @@ import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Contact from './Components/Contact/Contact';
 import Account from './Components/Account/Account';
+import Register from './Components/Account/Register/Register';
 import Cart from './Components/Cart/Cart';
 import States from './Components/AllStates/Main/Main';
 import Categories from './Components/AllCategories/Main/Main';
@@ -23,6 +24,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/account" component={Account} />
+        <Route path="/sign-up" component={Register} />
         <Route path="/cart" component={Cart} />
         <Route path="/states/" component={States} />
         <Route path="/categories/" component={Categories} />

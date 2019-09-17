@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import { Link } from 'react-router-dom';
 
 import './Account.css';
 
@@ -39,14 +40,14 @@ class Account extends Component {
                                 <Button variant="secondary" type="submit">
                                     Log In
                                 </Button>
-                                </Form>
+                            </Form>
                         </Col>
                         <Col className="signup-form">
                             <h1>Sign Up</h1>
                             <Jumbotron>
                                 <div className="signup-box">
                                     <h5>Create An Account</h5>
-                                    <Button variant="secondary">Sign Up</Button>
+                                    <Link to="/sign-up"><Button variant="secondary">Sign Up</Button></Link>
                                 </div>
                             </Jumbotron>
                         </Col>
