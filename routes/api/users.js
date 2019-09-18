@@ -11,9 +11,10 @@ const validateLoginInput = require("../../validation/login");
 
 
 // Load User model
-const User = require("../../models/User");
+const User = require('../../models/User');
+const UserSession = require('../../models/UserSession');
 
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
     // Check validation
@@ -46,51 +47,134 @@ router.post("/register", (req, res) => {
     });
 });
 
-router.post("/login", (req, res) => {
-    // Form validation
-    const { errors, isValid } = validateLoginInput(req.body);
-    // Check validation
+//Login route
+router.post('/login', (req, res) => {
+    //Form Validation
+
+    const { errors, isValid } = validateLoginInput(req.body)
+
+    //check validation
     if (!isValid) {
         return res.status(400).json(errors);
     }
-    const email = req.body.email;
-    const password = req.body.password;
-    // Find user by email
-    User.findOne({ email }).then(user => {
-        // Check if user exists
-        if (!user) {
-            return res.status(404).json({ emailnotfound: "Email not found" });
-        }
-        // Check password
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if (isMatch) {
-                // User matched
-                // Create JWT Payload
-                const payload = {
-                    id: user.id,
-                    name: user.name
-                };
-                // Sign token
-                jwt.sign(
-                    payload,
-                    keys.secretOrKey,
-                    {
-                        expiresIn: 31556926 // 1 year in seconds
-                    },
-                    (err, token) => {
-                        res.json({
-                            success: true,
-                            token: "Bearer " + token
+
+    User.findOne({ username: req.body.username }).then(user => {
+
+        //find User 
+        if (user) {
+
+            //compare password
+            if (bcrypt.compareSync(req.body.password, user.password)) {
+                //passwords match 
+                const userSession = new UserSession();
+
+                userSession.userId = user._id;
+                userSession.save((err, doc) => {
+                    if (err) {
+                        return res.send({
+                            success: false,
+                            message: 'Error: server error'
                         });
                     }
-                );
+
+                    return res.send({
+                        success: true,
+                        message: 'Valid login',
+                        token: doc._id,
+                        id: doc.userId
+                    });
+                });
             } else {
-                return res
-                    .status(400)
-                    .json({ passwordincorrect: "Password incorrect" });
+                return res.status(400).json({ password: 'Password incorrect' })
             }
-        });
+        } else {
+            return res.status(400).json({ username: 'Username not found' })
+        }
     });
+
+
 });
+
+//verify token
+router.get('/verify', (req, res) => {
+    //get the token
+    const { query } = req;
+    const { token } = query;
+
+    // ?token=test
+
+    //verify the token is one of a kind and is not deleted
+
+    UserSession.find({
+        _id: token,
+        isDeleted: false
+    }, (err, sessions) => {
+        if (err) {
+            return res.send({
+                success: false,
+                message: 'Error: Server error'
+            })
+        }
+
+        if (sessions.length != 1) {
+            return res.send({
+                success: false,
+                message: 'Error: Invalid'
+            })
+        } else {
+            return res.send({
+                success: true,
+                message: 'Good',
+                id: sessions
+            })
+        }
+    })
+})
+
+//get user
+
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+
+    User.findById(id, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(user);
+        }
+    })
+})
+
+//Logout route
+router.post('/logout', (req, res) => {
+    //get the token
+    const { query } = req;
+    const { token } = query;
+
+    //verify the token is one of a kind and is not deleted
+
+    UserSession.findOneAndUpdate({
+        _id: token,
+        isDeleted: false
+    }, {
+            $set: {
+                isDeleted: true
+            }
+        }, null, (err, sessions) => {
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server error'
+                })
+            }
+
+            return res.send({
+                success: true,
+                message: 'Good'
+            })
+
+        })
+});
+
 
 module.exports = router;
