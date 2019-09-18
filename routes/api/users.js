@@ -58,11 +58,10 @@ router.post('/login', (req, res) => {
         return res.status(400).json(errors);
     }
 
-    User.findOne({ username: req.body.username }).then(user => {
+    User.findOne({ email: req.body.email }).then(user => {
 
         //find User 
         if (user) {
-
             //compare password
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 //passwords match 
@@ -88,7 +87,7 @@ router.post('/login', (req, res) => {
                 return res.status(400).json({ password: 'Password incorrect' })
             }
         } else {
-            return res.status(400).json({ username: 'Username not found' })
+            return res.status(400).json({ username: 'Email not found' })
         }
     });
 

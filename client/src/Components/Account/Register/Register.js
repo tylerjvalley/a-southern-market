@@ -4,7 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import './Register.css';
+import { setInStorage, getFromStorage } from '../../../assets/utils';
 
 
 class Register extends Component {
@@ -15,6 +17,15 @@ class Register extends Component {
         email: '',
         password: '',
         password2: '',
+        redirect: false,
+    }
+
+    componentDidMount() {
+        const obj = getFromStorage('southern_market');
+
+        if (obj && obj.token) {
+            this.setState({ redirect: true })
+        }
     }
 
 
@@ -37,6 +48,12 @@ class Register extends Component {
 
     }
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to="/dashboard" />
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
@@ -51,16 +68,20 @@ class Register extends Component {
 
         axios.post('http://localhost:5000/api/users/register', newUser)
              .then(res => {
-                 console.log('Sucessfully Signed In', res)
+                 console.log('Sucessfully Signed In')
+
+                 axios.post('http://localhost:5000/api/users/login', newUser)
+                      .then(res => {
+                          setInStorage('southern_market', { token: res.data.token });
+                          this.setState({ redirect: true })
+                      })
+                      .catch(err => {
+                          console.log('Problem loggin in', err)
+                      })
              })
              .catch(err => {
                  console.log(err);
-             })
-        
-
-        
-
-       
+             })   
 
     }
 
@@ -69,6 +90,7 @@ class Register extends Component {
 
         return (
             <div className="register-page">
+                {this.renderRedirect()}
                 <div className="register-page-top">
                     <Link to="/account" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
                     <h1>Create an Account</h1>             
