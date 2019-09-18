@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { getFromStorage, setInStorage } from '../../assets/utils';
+import { Redirect } from 'react-router-dom';
 import './Account.css';
 
 
@@ -14,10 +16,29 @@ import './Account.css';
 class Account extends Component {
 
     state = {
+        isLoggedIn: false,
+        isLoading: false,
+        redirect: false,
+        loginError: '',
         loginEmail: '',
         loginPassword: '',
     }
 
+
+    componentDidMount() {
+        //check if user is logged in. If not, display log in/signup screen
+        const obj = getFromStorage('southern_market');
+
+        if (obj && obj.token) {
+            this.setState({ redirect: true })
+        }
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to="/dashboard" />
+        }
+    }
 
     handleLoginInput = (type, e) => {
 
@@ -41,10 +62,19 @@ class Account extends Component {
 
         axios.post('http://localhost:5000/api/users/login', user)
              .then(res => {
-                 console.log('Successfully logged in', res)
+                 setInStorage('southern_market', { token: res.data.token });
+                 this.setState({
+                     loginError: 'Successfully logged in',
+                     token: res.data.token
+                 })
+                 console.log(this.state.loginError);
+                 this.setState({ redirect: true })
              })
              .catch(err => {
                  console.log(err)
+                 this.setState({
+                     loginError: err.response.data
+                 })
              })
 
     }
@@ -52,6 +82,7 @@ class Account extends Component {
     render() {
         return (
             <div className="sign-in">
+                {this.renderRedirect()}
                 <Container>
                     <Row>
                         <Col className="login-form">

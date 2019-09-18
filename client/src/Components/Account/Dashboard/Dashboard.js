@@ -4,21 +4,56 @@ import Orders from './Orders/Orders';
 import Wishlist from './Wishlist/Wishlist';
 import Favorites from './Favorites/Favorites';
 import Settings from './Settings/Settings';
+import axios from 'axios';
+import { getFromStorage } from '../../../assets/utils';
+import { Redirect } from 'react-router-dom';
 import './Dashboard.css';
 
 
 class Dashboard extends Component {
 
     state = {
-        user: 'Tyler',
+        user: '',
         activeState: null,
+        redirect: false,
+        token: ''
 
     }
 
     componentDidMount() {
-        window.scrollTo(0, 0);
         let url = this.props.history.location.pathname;
         this.setState({ activeState: url }, function () { });
+
+        //check for a token
+        const obj = getFromStorage('southern_market');
+        if (obj && obj.token) {
+            const token = obj.token;
+            
+            axios.get(`/api/users/verify?token=${token}`)
+                .then(res => {
+                    if (res) {
+                        this.setState({
+                            token: token,
+                        });
+                    }
+                    //get user information based on token and userId
+                    axios.get(`http://localhost:5000/api/users/${res.data.id[0].userId}`)
+                         .then(user => {
+                             this.setState({ user: user.data.firstName })
+                         })
+                         .catch(err => {
+                             console.log(err)
+                         })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+
+
+        } else {
+            this.setState({ redirect: true })
+        }
     }
 
     selectHandler(selected) {
@@ -28,6 +63,27 @@ class Dashboard extends Component {
 
         })
 
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to="/account" />
+        }
+    }
+
+
+    logoutHandler = () => {
+        
+        axios.post(`http://localhost:5000/api/users/logout?token=${this.state.token}`)
+            .then(res => {
+                localStorage.removeItem('southern_market')
+                console.log('Logged out')
+                this.setState({ redirect: true })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        
     }
 
 
@@ -65,12 +121,14 @@ class Dashboard extends Component {
 
         return (
                 <div className="states-page-body">
+                {this.renderRedirect()}
                     <div className="states-sidebar">
                         <ListGroup variant="flush">
                             <ListGroup.Item onClick={() => this.selectHandler('Orders')}>Orders</ListGroup.Item>
                             <ListGroup.Item onClick={() => this.selectHandler('Wishlist')}>Wishlist</ListGroup.Item>
                             <ListGroup.Item onClick={() => this.selectHandler('Favorites')}>Favorites</ListGroup.Item>
                             <ListGroup.Item onClick={() => this.selectHandler('Settings')}>Settings</ListGroup.Item>
+                            <ListGroup.Item onClick={() => this.logoutHandler()}>Logout</ListGroup.Item>
                         </ListGroup>
                     </div>
 
