@@ -57,7 +57,7 @@ class Account extends Component {
                         <Col className="login-form">
                             <h1>Log In</h1>
                             <Form>
-                                <Form.Group controlId="formBasicEmail">
+                                <Form.Group>
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control onChange={(e) => this.handleLoginInput('email', e)} type="email" placeholder="Enter email" />
                                     

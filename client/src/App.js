@@ -5,6 +5,8 @@ import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Contact from './Components/Contact/Contact';
 import Account from './Components/Account/Account';
+import Dashboard from './Components/Account/Dashboard/Dashboard';
+import Admin from './Components/Admin/Admin';
 import Register from './Components/Account/Register/Register';
 import Cart from './Components/Cart/Cart';
 import States from './Components/AllStates/Main/Main';
@@ -25,6 +27,8 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/account" component={Account} />
         <Route path="/sign-up" component={Register} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/admin" component={Admin} />
         <Route path="/cart" component={Cart} />
         <Route path="/states/" component={States} />
         <Route path="/categories/" component={Categories} />
