@@ -4,6 +4,7 @@ import Orders from './Orders/Orders';
 import Wishlist from './Wishlist/Wishlist';
 import Favorites from './Favorites/Favorites';
 import Settings from './Settings/Settings';
+import Admin from '../../Admin/Admin';
 import axios from 'axios';
 import { getFromStorage } from '../../../assets/utils';
 import { Redirect } from 'react-router-dom';
@@ -14,6 +15,7 @@ class Dashboard extends Component {
 
     state = {
         user: '',
+        isAdmin: false,
         activeState: null,
         redirect: false,
         token: ''
@@ -39,7 +41,11 @@ class Dashboard extends Component {
                     //get user information based on token and userId
                     axios.get(`http://localhost:5000/api/users/${res.data.id[0].userId}`)
                          .then(user => {
-                             this.setState({ user: user.data.firstName })
+                             
+                             this.setState({ 
+                                 user: user.data.firstName,
+                                 isAdmin: user.data.isAdmin
+                             })
                          })
                          .catch(err => {
                              console.log(err)
@@ -109,6 +115,10 @@ class Dashboard extends Component {
                 heading = (<h1>Settings</h1>)
                 content = (<Settings />)
                 break;
+            case '/dashboard/Admin':
+                heading = (<h1>Admin</h1>)
+                content = (<Admin />)
+                break;
            
             default:
                 heading = (<h1>{this.state.user}'s Dashboard</h1>) 
@@ -128,6 +138,10 @@ class Dashboard extends Component {
                             <ListGroup.Item onClick={() => this.selectHandler('Wishlist')}>Wishlist</ListGroup.Item>
                             <ListGroup.Item onClick={() => this.selectHandler('Favorites')}>Favorites</ListGroup.Item>
                             <ListGroup.Item onClick={() => this.selectHandler('Settings')}>Settings</ListGroup.Item>
+                            {this.state.isAdmin ? 
+                            (<ListGroup.Item onClick={() => this.selectHandler('Admin')}>Admin</ListGroup.Item>)
+                            : null
+                            }
                             <ListGroup.Item onClick={() => this.logoutHandler()}>Logout</ListGroup.Item>
                         </ListGroup>
                     </div>

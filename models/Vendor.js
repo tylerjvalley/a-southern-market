@@ -1,25 +1,35 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    
-    lastName: {
+const VendorSchema = new Schema({
+    name: {
         type: String,
         required: true
     },
 
-    email: {
+    description: {
         type: String,
         required: true
     },
 
-    password: {
+    street: {
         type: String,
         required: true
+    },
+
+    state: {
+        type: String,
+        required: true
+    },
+
+    zipCode: {
+        type: String,
+        required: true
+    },
+
+    items: {
+        type: Array,
+        required: false
     },
 
     date: {
@@ -27,10 +37,6 @@ const UserSchema = new Schema({
         default: Date.now
     },
 
-    isAdmin: {
-        type: Boolean,
-        default: false
-    }
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = Vendor = mongoose.model('vendors', VendorSchema);
