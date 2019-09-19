@@ -31,7 +31,7 @@ class Dashboard extends Component {
         if (obj && obj.token) {
             const token = obj.token;
             
-            axios.get(`/api/users/verify?token=${token}`)
+            axios.get(`http://localhost:5000/api/users/verify?token=${token}`)
                 .then(res => {
                     if (res) {
                         this.setState({

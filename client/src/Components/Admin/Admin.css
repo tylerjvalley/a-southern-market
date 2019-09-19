@@ -1,0 +1,11 @@
+.admin-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.card {
+    padding: 1.5em;
+    margin: 2em;
+}
