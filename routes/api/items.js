@@ -19,7 +19,7 @@ router.post('/addItem', (req, res) => {
         return res.status(400).json(errors);
     }
 
-    Item.findOne({ email: req.body._id }).then(item => {
+    Item.findOne({ name: req.body.name }).then(item => {
         if (item) {
             return res.status(400).json({ item: "Item already exists" });
         } else {
