@@ -6,6 +6,8 @@ const passport = require('passport');
 
 
 const users = require('./routes/api/users');
+const vendors = require('./routes/api/vendors');
+const items = require('./routes/api/items');
 
 const app = express();
 
@@ -32,10 +34,12 @@ mongoose.connect(db, { useNewUrlParser: true })
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
-require("./config/passport")(passport);
+require('./config/passport')(passport);
 
 // Routes
-app.use("/api/users", users);
+app.use('/api/users', users);
+app.use('/api/vendors', vendors);
+app.use('/api/items', items);
 
 const port = process.env.PORT || 5000;
 

@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
+
 
 
 // Load input validation
-const validateVendorInput = require("../../validation/vendors");
+const validateVendorInput = require('../../validation/vendor');
 
 
 // Load User model
@@ -20,7 +18,7 @@ router.post('/addVendor', (req, res) => {
         return res.status(400).json(errors);
     }
 
-    Vendor.findOne({ email: req.body._id }).then(vendor => {
+    Vendor.findOne({ name: req.body.name }).then(vendor => {
         if (vendor) {
             return res.status(400).json({ vendor: "Vendor already exists" });
         } else {
@@ -28,6 +26,7 @@ router.post('/addVendor', (req, res) => {
                 name: req.body.name,
                 description: req.body.description,
                 street: req.body.street,
+                city: req.body.city,
                 state: req.body.state,
                 zipCode: req.body.zipCode
             });

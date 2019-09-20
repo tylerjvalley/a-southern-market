@@ -17,6 +17,11 @@ const VendorSchema = new Schema({
         required: true
     },
 
+    city: {
+        type: String,
+        required: true
+    },
+    
     state: {
         type: String,
         required: true
@@ -39,4 +44,4 @@ const VendorSchema = new Schema({
 
 });
 
-module.exports = Vendor = mongoose.model('vendors', VendorSchema);
+module.exports = Vendor = mongoose.model('Vendor', VendorSchema);

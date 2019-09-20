@@ -9,3 +9,7 @@
     padding: 1.5em;
     margin: 2em;
 }
+
+.dropdown.show .dropdown-menu {
+    overflow: scroll;
+}
