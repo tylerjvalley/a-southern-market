@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { getFromStorage } from '../../assets/utils';
-import AddItem from './AddItem/AddItem';
-import AddVendor from './AddVendor/AddVendor';
-import EditItem from './EditItem/EditItem';
-import EditVendor from './EditVendor/EditVendor';
 import axios from 'axios';
 import './Admin.css'
 

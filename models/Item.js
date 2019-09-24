@@ -12,17 +12,22 @@ const ItemSchema = new Schema({
         required: true
     },
 
+    price: {
+        type: Number,
+        required: true
+    },
+
     vendor: {
         type: String,
         required: true
     },
 
-    image: {
-        type: String, 
+    category: {
+        type: String,
         required: false
     },
 
-    category: {
+    itemImage: {
         type: String,
         required: false
     },

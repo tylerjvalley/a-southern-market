@@ -7,7 +7,7 @@ const router = express.Router();
 const validateVendorInput = require('../../validation/vendor');
 
 
-// Load User model
+// Load Vendor model
 const Vendor = require('../../models/Vendor');
 
 router.post('/addVendor', (req, res) => {
@@ -38,6 +38,18 @@ router.post('/addVendor', (req, res) => {
         }
     });
 });
+
+router.get('/all', (req, res) => {
+
+   Vendor.find({})
+         .then(vendors => {
+             return res.json(vendors)
+         })
+         .catch(err => {
+             console.log(err)
+         })
+
+})
 
 router.get('/:id', (req, res) => {
     let id = req.params.id;

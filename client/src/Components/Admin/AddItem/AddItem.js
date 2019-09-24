@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 
 
@@ -12,16 +14,28 @@ class AddItem extends Component {
 
 
     state = {
+        allVendors: [],
         itemName: '',
         itemDesc: '',
-        vendor: '',
-        image: '',
-        category: '',
+        price: '',
+        vendor: 'Select Vendor',
+        image: null,
+        category: 'Select Category',
         errors: '',
     }
 
     componentDidMount() {
-    
+        //get all vendors from db and store them in state
+        axios.get('http://localhost:5000/api/vendors/all')
+             .then(res => {
+                 if (res) {
+                      const allVendors = [];
+                     res.data.map(vendor => {
+                        return allVendors.push(vendor.name);
+                     })
+                     this.setState({ allVendors: allVendors })
+                 }
+             })
     }
 
     handleInput = (type, e) => {
@@ -30,6 +44,8 @@ class AddItem extends Component {
             this.setState({ itemName: e.target.value })
         } else if (type === 'itemDesc') {
             this.setState({ itemDesc: e.target.value })
+        } else if (type === 'price') {
+            this.setState({ price: e.target.value })
         } else if (type === 'vendor') {
             this.setState({ vendor: e.target.value })
         } else if (type === 'category') {
@@ -37,19 +53,62 @@ class AddItem extends Component {
         } 
     }
 
+    categoryHandler = (category, e) => {
+        e.preventDefault();
+
+        switch (category) {
+            case 'Gifts':
+                this.setState({ category: category });
+                break;
+            case 'Novelties and Art':
+                this.setState({ category: category });
+                break;
+            case 'Baby':
+                this.setState({ category: category });
+                break;
+            case 'Home':
+                this.setState({ category: category });
+                break;
+            case 'Food and Drink':
+                this.setState({ category: category });
+                break;
+            case 'Clothing':
+                this.setState({ category: category });
+                break;
+            case 'Football':
+                this.setState({ category: category });
+                break;
+            case 'Other':
+                this.setState({ category: category });
+                break;
+            
+            default:
+                this.setState({ category: 'Select Category' })
+        }
+    }
+
+    vendorHandler = (vendor, e) => {
+        e.preventDefault();
+
+       this.setState({ vendor: vendor.vendor })
+    }
+
+    imageHandler = (e) => {
+        this.setState({ image: e.target.files[0] }, () => console.log(this.state.image) )
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const item = {
-            name: this.state.itemName,
-            description: this.state.itemDesc,
-            vendor: this.state.vendor,
-            category: this.state.category
-        }
-
-        console.log(item);
+        const fd = new FormData();
+        fd.append('name', this.state.itemName);
+        fd.append('description', this.state.itemDesc);
+        fd.append('vendor', this.state.vendor);
+        fd.append('price', this.state.price);
+        fd.append('category', this.state.category);
+        fd.append('itemImage', this.state.image);
        
-        axios.post('http://localhost:5000/api/items/addItem', item)
+        axios.post('http://localhost:5000/api/items/addItem', fd)
             .then(res => {
                 console.log(res);
             })
@@ -60,6 +119,7 @@ class AddItem extends Component {
     }
 
     render() {
+
         return (
             <div className="register-page">
                 <div className="register-page-top">
@@ -74,18 +134,35 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formItemDesc">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" onChange={(e) => this.handleInput('itemDesc', e)} type="test" placeholder="Enter description" />
+                            <Form.Control as="textarea" onChange={(e) => this.handleInput('itemDesc', e)} type="text" placeholder="Enter description" />
                         </Form.Group>
-                        <Form.Group controlId="formItemVendor">
-                            <Form.Label>Vendor</Form.Label>
-                            <Form.Control onChange={(e) => this.handleInput('vendor', e)} type="text" placeholder="Enter vendor" />
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control onChange={(e) => this.handleInput('price', e)} type="text" placeholder="Enter price" />
                         </Form.Group>
 
-                        <Form.Group controlId="formItemCategory">
-                            <Form.Label>Category</Form.Label>
-                            <Form.Control onChange={(e) => this.handleInput('category', e)} type="text" placeholder="Category" />
+                        <DropdownButton variant="secondary" style={{ marginBottom: '1em'}} title={this.state.vendor}>
+                            {this.state.allVendors.map(vendor => {
+                               return (<Dropdown.Item key={vendor} onClick={(e) => this.vendorHandler({vendor}, e)}>{vendor}</Dropdown.Item>)
+                            })}
+                        </DropdownButton>
+
+                        <DropdownButton variant="secondary" style={{ marginBottom: '1em' }} title={this.state.category}>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Gifts', e)}>Gifts</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Novelties and Art', e)}>Novelties and Art</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Baby', e)}>Baby</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Home', e)}>Home</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Food and Drink', e)}>Food and Drink</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Clothing', e)}>Clothing</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Football', e)}>Football</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => this.categoryHandler('Other', e)}>Other</Dropdown.Item>
+                        </DropdownButton>
+
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Image (optional)</Form.Label>
+                            <Form.Control onChange={this.imageHandler} type="file"/>
                         </Form.Group>
-                        <Button onClick={(e) => this.handleSubmit(e)} variant="success">Add Vendor</Button>
+                        <Button onClick={(e) => this.handleSubmit(e)} variant="success">Add Item</Button>
                     </Form>
                 </Container>
             </div>

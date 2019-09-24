@@ -20,6 +20,9 @@ app.use(
 );
 app.use(bodyParser.json());
 
+//for parsing uploads folder
+app.use('/uploads', express.static('uploads'))
+
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 
