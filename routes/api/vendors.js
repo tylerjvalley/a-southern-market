@@ -39,7 +39,7 @@ router.post('/addVendor', (req, res) => {
     });
 });
 
-router.get('/all', (req, res) => {
+router.get('/all', (req, res) => { 
 
    Vendor.find({})
          .then(vendors => {
@@ -59,6 +59,29 @@ router.get('/:id', (req, res) => {
             console.log(err);
         } else {
             res.json(user);
+        }
+    })
+})
+
+router.put('/update/:id', (req, res) => {
+  
+    Vendor.findById(req.params.id, (err, vendor) => {
+        if (!vendor) {
+            res.status(400).send('Data was not found');
+        } else {
+            vendor.name = req.body.name;
+            vendor.description = req.body.description;
+            vendor.street = req.body.street;
+            vendor.city = req.body.city;
+            vendor.state = req.body.state;
+            vendor.zipCode = req.body.zipCode;
+
+            vendor.save().then(vendor => {
+                res.json('Vendor Updated')
+            })
+            .catch(err => {
+                res.status(400).send('Update did not go through')
+            })
         }
     })
 })

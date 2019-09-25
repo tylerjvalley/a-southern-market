@@ -29,7 +29,7 @@ class AddItem extends Component {
         axios.get('http://localhost:5000/api/vendors/all')
              .then(res => {
                  if (res) {
-                      const allVendors = [];
+                     const allVendors = [];
                      res.data.map(vendor => {
                         return allVendors.push(vendor.name);
                      })
