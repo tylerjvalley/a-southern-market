@@ -56,8 +56,6 @@ class EditVendor extends Component {
 
     render() {
 
-
-        
           const cards = this.state.vendors.map(vendor => {
               
                 return (

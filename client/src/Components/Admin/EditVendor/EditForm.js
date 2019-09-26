@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton'; 
 import axios from 'axios';
@@ -220,11 +219,7 @@ class EditForm extends Component {
 
     
         return (
-            <div className="register-page">
-                <div className="register-page-top">
-                    <Link to="/dashboard/Admin" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
-                    <h1>Edit Vendor</h1>
-                </div>
+            <div className="register-page" style={{ margin: 'auto' }}>
                 <Container>
                     <Form>
                         <Form.Group controlId="formName">

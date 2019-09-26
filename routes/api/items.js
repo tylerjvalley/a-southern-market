@@ -53,6 +53,40 @@ router.post('/addItem', upload.single('itemImage'), (req, res) => {
     });
 });
 
+router.get('/all', (req, res) => {
+
+    Item.find({})
+        .then(items => {
+            return res.json(items)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+})
+
+router.put('/update/:id', (req, res) => {
+
+    Item.findById(req.params.id, (err, item) => {
+        if (!item) {
+            res.status(400).send('Data was not found');
+        } else {
+            item.name = req.body.name;
+            item.description = req.body.description;
+            item.price = req.body.price;
+            item.vendor = req.body.vendor;
+            item.category = req.body.category;
+            item.save().then(item => {
+                res.json('Item Updated')
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(400).send('Update did not go through')
+            })
+        }
+    })
+})
+
 router.get('/:id', (req, res) => {
     let id = req.params.id;
 
