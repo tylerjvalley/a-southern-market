@@ -1,38 +1,36 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import HoneyImage from '../../assets/images/honey.png';
-import PieImage from '../../assets/images/pie.png';
-import BeerImage from '../../assets/images/beer.png';
 
-const food = () => (
-    <div className="categories-page-products">
-        <Card className="product" style={{ backgroundImage: "url(" + HoneyImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Honey</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">Get you some of this honey</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
-        <Card className="product" style={{ backgroundImage: "url(" + PieImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Pie</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">Best pie you'll ever have in your life</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
-        <Card className="product" style={{ backgroundImage: "url(" + BeerImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Beer</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">Good beer</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
 
-    </div>
-)
+const food = (props) => {
+
+    let items;
+    if (props.items.length > 0) {
+        items = props.items.map(item => {
+            const imageSource = `../../../../${item.itemImage}`
+            return (
+                <Card key={item._id} className="product" style={{ backgroundImage: "url(" + imageSource + ")" }}>
+                    <Card.Body>
+                        <Card.Title style={{ color: 'black' }} className="na-item">{item.name}</Card.Title>
+                        <Card.Text style={{ color: 'black' }} className="na-item">{item.description}</Card.Text>
+                        <Card.Text style={{ color: 'black' }} className="na-item">Vendor: {item.vendor}</Card.Text>
+                        <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
+                        <Button>Check it out</Button>
+                    </Card.Body>
+                </Card>
+            )
+        })
+
+    } else {
+        items = (<h1>Adding items to this category. Check back soon!</h1>)
+    }
+
+    return (
+        <div className="categories-page-products">
+            {items}
+        </div>
+    );
+}
 
 export default food;

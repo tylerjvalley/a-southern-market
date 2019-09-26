@@ -9,6 +9,7 @@ import Home from '../Home';
 import Novelties from '../Novelties';
 import Other from '../Other';
 import NewArrivals from '../NewArrivals';
+import axios from 'axios';
 import './Main.css';
 
 
@@ -17,7 +18,7 @@ class AllCategories extends Component {
 
     state = {
         activeState: null, /* /states/ */
-
+        items: [],
     }
 
     componentDidMount() {
@@ -25,6 +26,18 @@ class AllCategories extends Component {
         let url = this.props.history.location.pathname;
         this.setState({ activeState: url }, function () { });
 
+        //get all items
+        axios.get('http://localhost:5000/api/items/all')
+            .then(res => {
+                if (res) {
+                    const items = [];
+                    res.data.map(item => {
+                        return items.push(item);
+                    })
+                    this.setState({ items: items })
+                }
+            })
+            .catch(err => console.log(err));
 
     }
 
@@ -39,6 +52,14 @@ class AllCategories extends Component {
 
     }
 
+    seperateItems = (category) => {
+        const stateVendors = []
+        this.state.items.map(item => {
+            return item.category === category ? stateVendors.push(item) : null;
+        })
+
+        return stateVendors;
+    }
 
 
 
@@ -46,39 +67,47 @@ class AllCategories extends Component {
 
 
     render() {
-        let browsing, products
+        let browsing, products, selectedItems;
         switch (this.props.history.location.pathname) {
             case '/categories/Baby':
                 browsing = (<h1>For the wee lads</h1>)
-                products = (<Baby />)
+                selectedItems = this.seperateItems('Baby');
+                products = (<Baby items={selectedItems} />)
                 break;
             case '/categories/Clothing':
                 browsing = (<h1>Clothes</h1>)
-                products = (<Clothing />)
+                selectedItems = this.seperateItems('Clothing');
+                products = (<Clothing items={selectedItems} />)
                 break;
             case '/categories/Food':
                 browsing = (<h1>Munchies</h1>)
-                products = (<Food />)
+                selectedItems = this.seperateItems('Food and Drink');
+                products = (<Food items={selectedItems} />)
                 break;
             case '/categories/Football':
                 browsing = (<h1>Greatest Sport in the World</h1>)
-                products = (<Football />)
+                selectedItems = this.seperateItems('Football');
+                products = (<Football items={selectedItems} />)
                 break;
             case '/categories/Gifts':
                 browsing = (<h1>Gifts</h1>)
-                products = (<Gifts />)
+                selectedItems = this.seperateItems('Gifts');
+                products = (<Gifts items={selectedItems} />)
                 break;
             case '/categories/Home':
                 browsing = (<h1>For la casa</h1>)
-                products = (<Home />)
+                selectedItems = this.seperateItems('Home');
+                products = (<Home items={selectedItems} />)
                 break;
             case '/categories/Novelties-and-Art':
                 browsing = (<h1>Hipster things</h1>)
-                products = (<Novelties />)
+                selectedItems = this.seperateItems('Novelties and Art');
+                products = (<Novelties items={selectedItems} />)
                 break;
             case '/categories/Other':
                 browsing = (<h1>Everything Else</h1>)
-                products = (<Other />)
+                selectedItems = this.seperateItems('Other');
+                products = (<Other items={selectedItems} />)
                 break;
             default:
                 browsing = (<h1>New Arrivals</h1>)

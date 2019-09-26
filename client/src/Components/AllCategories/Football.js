@@ -1,38 +1,35 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import FanImage from '../../assets/images/sportsfan.jpg';
-import BallImage from '../../assets/images/football.png';
-import TexansImage from '../../assets/images/texans.jpg';
 
-const football = () => (
-    <div className="categories-page-products">
-        <Card className="product" style={{ backgroundImage: "url(" + FanImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Aviator Sunglasses from: Sunglass World</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">Mobile, AL</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
-        <Card className="product" style={{ backgroundImage: "url(" + BallImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Football</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">It's a football</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
-        <Card className="product" style={{ backgroundImage: "url(" + TexansImage + ")" }}>
-            <Card.Body>
-                <Card.Title style={{ color: 'black' }} className="na-item">Houston Texans Jersey</Card.Title>
-                <Card.Text style={{ color: 'black' }} className="na-item">If you like horrible sports teams this is for you</Card.Text>
-                <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                <Button>Check it out</Button>
-            </Card.Body>
-        </Card>
+const football = (props) => {
 
-    </div>
-)
+    let items;
+    if (props.items.length > 0) {
+        items = props.items.map(item => {
+            const imageSource = `../../../../${item.itemImage}`
+            return (
+                <Card key={item._id} className="product" style={{ backgroundImage: "url(" + imageSource + ")" }}>
+                    <Card.Body>
+                        <Card.Title style={{ color: 'black' }} className="na-item">{item.name}</Card.Title>
+                        <Card.Text style={{ color: 'black' }} className="na-item">{item.description}</Card.Text>
+                        <Card.Text style={{ color: 'black' }} className="na-item">Vendor: {item.vendor}</Card.Text>
+                        <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
+                        <Button>Check it out</Button>
+                    </Card.Body>
+                </Card>
+            )
+        })
+
+    } else {
+        items = (<h1>Adding items to this category. Check back soon!</h1>)
+    }
+
+    return (
+        <div className="categories-page-products">
+            {items}
+        </div>
+    );
+}
 
 export default football;
