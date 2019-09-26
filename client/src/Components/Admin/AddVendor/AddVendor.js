@@ -21,13 +21,9 @@ class AddVendor extends Component {
         city: '',
         state: 'Select State',
         zip: '',
+        image: null,
         errors: '',
     }
-
-    componentDidMount() {
-        console.log(this.state.errors)
-    }
-
 
     handleInput = (type, e) => {
         
@@ -204,22 +200,27 @@ class AddVendor extends Component {
         }   
     }
 
+    imageHandler = (e) => {
+        this.setState({ image: e.target.files[0] }, () => console.log(this.state.image))
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const vendor = {
-            name: this.state.vendorName,
-            description: this.state.vendorDesc,
-            street: this.state.street,
-            city: this.state.city,
-            state: this.state.state,
-            zipCode: this.state.zip
-        }
+        const fd = new FormData();
+        fd.append('name', this.state.vendorName);
+        fd.append('description', this.state.vendorDesc);
+        fd.append('street', this.state.street);
+        fd.append('city', this.state.city);
+        fd.append('state', this.state.state);
+        fd.append('zipCode', this.state.zip);
+        fd.append('vendorImage', this.state.image);
 
         
-        axios.post('http://localhost:5000/api/vendors/addVendor', vendor)
+        axios.post('http://localhost:5000/api/vendors/addVendor', fd)
              .then(res => {
                  console.log(res);
+                 window.location.reload();
              })
              .catch(err => {
                  console.log(err);
@@ -249,7 +250,7 @@ class AddVendor extends Component {
                         </Form.Group>
                         <Form.Group controlId="formCity">
                             <Form.Label>City</Form.Label>
-                            <Form.Control onChange={(e) => this.handleInput('city', e)} type="text" placeholder="Address" />
+                            <Form.Control onChange={(e) => this.handleInput('city', e)} type="text" placeholder="City" />
                         </Form.Group>
 
                         <DropdownButton variant="secondary" title={this.state.state}>
@@ -308,6 +309,10 @@ class AddVendor extends Component {
                         <Form.Group controlId="formZip">
                             <Form.Label>Zip Code</Form.Label>
                             <Form.Control onChange={(e) => this.handleInput('zip', e)} type="text" placeholder="Zip Code" />
+                        </Form.Group>
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Image (optional)</Form.Label>
+                            <Form.Control onChange={this.imageHandler} type="file" />
                         </Form.Group>
                         <Button onClick={(e) => this.handleSubmit(e)} variant="success">Add Vendor</Button>
                     </Form>

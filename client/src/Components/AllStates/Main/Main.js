@@ -14,6 +14,7 @@ import Tennessee from '../Tennessee';
 import Texas from '../Texas';
 import Virginia from '../Virginia';
 import WestVirginia from '../WestVirginia';
+import axios from 'axios';
 import './Main.css';
 
 
@@ -22,18 +23,34 @@ class AllStates extends Component {
 
     state = {
         activeState: null, /* /states/ */
-       
+        vendors: []
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
         let url = this.props.history.location.pathname;
         this.setState({ activeState: url }, function(){});
-
+        axios.get('http://localhost:5000/api/vendors/all')
+            .then(res => {
+                if (res) {
+                    const allVendors = [];
+                    res.data.map(vendor => {
+                        return allVendors.push(vendor);
+                    })
+                    this.setState({ vendors: allVendors })
+                }
+            })
 
     }
 
-    
+    seperateVendors = (state) => {
+       const stateVendors = []
+       this.state.vendors.map(vendor => {
+           return vendor.state === state ? stateVendors.push(vendor) : null;
+       })
+
+        return stateVendors;
+    }
 
     selectStateHandler(selected) {
         
@@ -43,71 +60,79 @@ class AllStates extends Component {
         })
         
     }
-
     
-
-   
-
-    
-
     render() {
-        let browsing, vendors
+        let browsing, vendors, selectedVendors
         switch (this.props.history.location.pathname) {
             case '/states/Alabama':
                 browsing = (<h1>Browsing Vendors from Alabama</h1>)
-                vendors = (<Alabama />)
+                selectedVendors = this.seperateVendors('AL');
+                vendors = (<Alabama vendors={selectedVendors} />);
                 break;
             case '/states/Arkansas':
                 browsing = (<h1>Browsing Vendors from Arkansas</h1>)
-                vendors = (<Arkansas />)
+                selectedVendors = this.seperateVendors('AR');
+                vendors = (<Arkansas vendors={selectedVendors} />)
                 break;
             case '/states/Florida':
                 browsing = (<h1>Browsing Vendors from Florida</h1>)
-                vendors = (<Florida />)
+                selectedVendors = this.seperateVendors('FL');
+                vendors = (<Florida vendors={selectedVendors}/>)
                 break;
             case '/states/Georgia':
                 browsing = (<h1>Browsing Vendors from Georgia</h1>)
-                vendors = (<Georgia />)
+                selectedVendors = this.seperateVendors('GA');
+                vendors = (<Georgia vendors={selectedVendors} />)
                 break;
             case '/states/Kentucky':
                 browsing = (<h1>Browsing Vendors from Kentucky</h1>)
-                vendors = (<Kentucky />)
+                selectedVendors = this.seperateVendors('KY');
+                vendors = (<Kentucky vendors={selectedVendors} />)
                 break;
             case '/states/Louisiana':
                 browsing = (<h1>Browsing Vendors from Louisiana</h1>)
-                vendors = (<Louisiana />)
+                selectedVendors = this.seperateVendors('LA');
+                vendors = (<Louisiana vendors={selectedVendors} />)
                 break;
             case '/states/Mississippi':
                 browsing = (<h1>Browsing Vendors from Mississippi</h1>)
-                vendors = (<Mississippi />)
+                selectedVendors = this.seperateVendors('MS');
+                vendors = (<Mississippi vendors={selectedVendors} />)
                 break;
             case '/states/North-Carolina':
                 browsing = (<h1>Browsing Vendors from North Carolina</h1>)
-                vendors = (<NorthCarolina />)
+                selectedVendors = this.seperateVendors('NC');
+                vendors = (<NorthCarolina vendors={selectedVendors} />)
                 break;
             case '/states/Oklahoma':
                 browsing = (<h1>Browsing Vendors from Oklahoma</h1>)
-                vendors = (<Oklahoma />)
+                selectedVendors = this.seperateVendors('OK');
+                vendors = (<Oklahoma vendors={selectedVendors} />)
                 break;
             case '/states/South-Carolina':
                 browsing = (<h1>Browsing Vendors from South Carolina</h1>)
-                vendors = (<SouthCarolina />)
+                selectedVendors = this.seperateVendors('SC');
+                vendors = (<SouthCarolina vendors={selectedVendors} />)
                 break;
             case '/states/Tennessee':
                 browsing = (<h1>Browsing Vendors from Tennessee</h1>)
-                vendors = (<Tennessee />)
+                selectedVendors = this.seperateVendors('TN');
+                vendors = (<Tennessee vendors={selectedVendors} />)
                 break;
             case '/states/Texas':
                 browsing = (<h1>Browsing Vendors from Texas</h1>)
-                vendors = (<Texas />)
+                selectedVendors = this.seperateVendors('TX');
+                vendors = (<Texas vendors={selectedVendors} />)
                 break;
             case '/states/Virginia':
                 browsing = (<h1>Browsing Vendors from Virginia</h1>)
-                vendors = (<Virginia />)
+                selectedVendors = this.seperateVendors('VA');
+                vendors = (<Virginia vendors={selectedVendors} />)
                 break;
             case '/states/West-Virginia':
                 browsing = (<h1>Browsing Vendors from West Virginia</h1>)
-                vendors = (<WestVirginia />)
+                selectedVendors = this.seperateVendors('WV');
+                vendors = (<WestVirginia vendors={selectedVendors} />)
                 break;
             default: 
                 browsing = (<h1>Please Select a State</h1>)

@@ -1,5 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+
+
+//storing item images
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+
+const upload = multer({
+    storage: storage,
+});
+
 
 
 
@@ -10,7 +28,7 @@ const validateVendorInput = require('../../validation/vendor');
 // Load Vendor model
 const Vendor = require('../../models/Vendor');
 
-router.post('/addVendor', (req, res) => {
+router.post('/addVendor', upload.single('vendorImage'), (req, res) => {
     // Form validation
     const { errors, isValid } = validateVendorInput(req.body);
     // Check validation
@@ -28,7 +46,8 @@ router.post('/addVendor', (req, res) => {
                 street: req.body.street,
                 city: req.body.city,
                 state: req.body.state,
-                zipCode: req.body.zipCode
+                zipCode: req.body.zipCode,
+                vendorImage: req.file.path
             });
 
             newVendor

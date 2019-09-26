@@ -100,7 +100,7 @@ class AddItem extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const fd = new FormData();
+        const fd = new FormData(); 
         fd.append('name', this.state.itemName);
         fd.append('description', this.state.itemDesc);
         fd.append('vendor', this.state.vendor);

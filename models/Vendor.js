@@ -32,6 +32,11 @@ const VendorSchema = new Schema({
         required: true
     },
 
+    vendorImage: {
+        type: String,
+        required: false
+    },
+
     items: {
         type: Array,
         required: false

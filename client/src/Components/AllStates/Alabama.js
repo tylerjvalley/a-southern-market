@@ -3,44 +3,35 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
-import PlaceImage1 from '../../assets/images/honey.png';
-import PlaceImage2 from '../../assets/images/beer.png';
-import PlaceImage3 from '../../assets/images/home.png';
 
-const alabama = () => (
-    <Container>
-        <Row className="vendor">
+const alabama = (props) => {
 
-            <Col xs={6} md={4}>
-                <Image src={PlaceImage1} thumbnail />
-            </Col>
-            <Col>
-                <h2>Bama Store 1</h2>
-                <p>please fill me with useful information that tells the customer about the dope things they can find in this store</p>
-            </Col>
-        </Row>
-        <Row className="vendor">
-            <Col xs={6} md={4}>
-                <Image src={PlaceImage2} thumbnail />
-            </Col>
-            <Col>
-                <h2>Bama Store 2</h2>
-                <p>please fill me with useful information that tells the customer about the dope things they can find in this store</p>
-            </Col>
-        </Row>
-        <Row className="vendor">
-            <Col xs={6} md={4}>
-                <Image src={PlaceImage3} thumbnail />
-            </Col>
+    let vendors;
+    if (props.vendors.length > 0) {
+        vendors = props.vendors.map(vendor => {
+            const imageSource = `../../../../${vendor.vendorImage}`
+            return (
+                <Row key={vendor._id} className="vendor">
+                    <Col xs={6} md={4}>
+                        <Image src={imageSource} thumbnail />
+                    </Col>
+                    <Col>
+                        <h2>{vendor.name}</h2>
+                        <p>{vendor.description}</p>
+                    </Col>
+                </Row>
+            )
+        })
 
-            <Col>
-                <h2>Bama Store 3</h2>
-                <p>please fill me with useful information that tells the customer about the dope things they can find in this store</p>
-            </Col>
+    } else {
+        vendors = (<h1>No Vendors yet! Check back soon</h1>)
+    }
 
-
-        </Row>
-    </Container>  
-)
+    return (
+        <Container>
+            {vendors}
+        </Container> 
+    ) 
+}
 
 export default alabama;
