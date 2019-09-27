@@ -21,6 +21,8 @@ class AddItem extends Component {
         vendor: 'Select Vendor',
         image: null,
         category: 'Select Category',
+        newArrival: false,
+        featured: false,
         errors: '',
     }
 
@@ -37,6 +39,8 @@ class AddItem extends Component {
                  }
              })
     }
+
+   
 
     handleInput = (type, e) => {
 
@@ -97,6 +101,24 @@ class AddItem extends Component {
         this.setState({ image: e.target.files[0] }, () => console.log(this.state.image) )
     }
 
+    handleNewArrival = (e, value) => {
+        if (value === 'yes' && e.target.value === 'on') {
+            this.setState({ newArrival: true })
+        } else if (value === 'no' && e.target.value === 'on') {
+            this.setState({ newArrival: false })
+        }
+    }
+
+    handleFeatured = (e, value) => {
+         if (value === 'yes' && e.target.value === 'on') {
+            this.setState({ featured: true })
+        } else if (value === 'no' && e.target.value === 'on') {
+            this.setState({ featured: false })
+        }
+    }
+
+
+
     handleSubmit = (e) => {
         e.preventDefault();
 
@@ -107,10 +129,13 @@ class AddItem extends Component {
         fd.append('price', this.state.price);
         fd.append('category', this.state.category);
         fd.append('itemImage', this.state.image);
+        fd.append('newArrival', this.state.newArrival);
+        fd.append('featured', this.state.featured);
        
         axios.post('http://localhost:5000/api/items/addItem', fd)
             .then(res => {
                 console.log(res);
+                window.location.reload();
             })
             .catch(err => {
                 console.log(err);
@@ -161,6 +186,40 @@ class AddItem extends Component {
                         <Form.Group controlId="formItemPrice">
                             <Form.Label>Image (optional)</Form.Label>
                             <Form.Control onChange={this.imageHandler} type="file"/>
+                        </Form.Group>
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Add to New Arrivals?</Form.Label>
+                            <Form.Check
+                                onChange={(e) => this.handleNewArrival(e, 'yes')}
+                                type="radio"
+                                label="Yes"
+                                name="newArrivalRadio"
+                                id="newArrivalTrue"
+                            />
+                            <Form.Check
+                                onChange={(e) => this.handleNewArrival(e, 'no')}
+                                type="radio"
+                                label="No"
+                                name="newArrivalRadio"
+                                id="newArrivalFalse"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Add to Featured Items?</Form.Label>
+                            <Form.Check
+                                onChange={(e) => this.handleFeatured(e, 'yes')}
+                                type="radio"
+                                label="Yes"
+                                name="featuredRadio"
+                                id="featuredTrue"
+                            />
+                            <Form.Check
+                                onChange={(e) => this.handleFeatured(e, 'no')}
+                                type="radio"
+                                label="No"
+                                name="featuredRadio"
+                                id="featuredFalse"
+                            />
                         </Form.Group>
                         <Button onClick={(e) => this.handleSubmit(e)} variant="success">Add Item</Button>
                     </Form>

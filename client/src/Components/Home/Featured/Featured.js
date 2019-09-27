@@ -2,18 +2,18 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import './NewArrivals.css';
+import './Featured.css';
 
 
 
-const newArrivals = (props) => {
+const featured = (props) => {
 
 
-    let newArrivals;
+    let featured;
     if (props) {
 
-        newArrivals = props.items.map(item => {
-           const imageSource = `../../../../../${item.itemImage}`
+        featured = props.items.map(item => {
+            const imageSource = `../../../../../${item.itemImage}`
             return (
                 <Carousel.Item key={item._id}>
                     <Card className="new-arrivals-card" style={{ backgroundImage: "url(" + imageSource + ")", margin: 'auto' }}>
@@ -28,18 +28,18 @@ const newArrivals = (props) => {
             )
         })
     } else {
-        newArrivals = null;
+        featured = null;
     }
-    
+
 
     return (
         <Carousel className="new-arrivals-carousel">
 
-           {newArrivals}
+            {featured}
 
         </Carousel>
     );
 };
 
 
-export default newArrivals;
+export default featured;

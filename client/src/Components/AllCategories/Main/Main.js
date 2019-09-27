@@ -53,10 +53,14 @@ class AllCategories extends Component {
     }
 
     seperateItems = (category) => {
-        const stateVendors = []
+        let stateVendors = [];
         this.state.items.map(item => {
             return item.category === category ? stateVendors.push(item) : null;
         })
+
+        if (category === 'New Arrivals') {
+           stateVendors = this.state.items.filter(item => item.newArrival);
+        }
 
         return stateVendors;
     }
@@ -69,6 +73,11 @@ class AllCategories extends Component {
     render() {
         let browsing, products, selectedItems;
         switch (this.props.history.location.pathname) {
+            case '/categories/New-Arrivals':
+                browsing = (<h1>New Arrivals</h1>)
+                selectedItems = this.seperateItems('New Arrivals');
+                products = (<NewArrivals items={selectedItems} />)
+                break;
             case '/categories/Baby':
                 browsing = (<h1>For the wee lads</h1>)
                 selectedItems = this.seperateItems('Baby');

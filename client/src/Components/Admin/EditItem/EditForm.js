@@ -16,6 +16,8 @@ class EditForm extends Component {
         itemPrice: this.props.price,
         itemVendor: this.props.vendor,
         itemCategory: this.props.category,
+        isNewArrival: this.props.newArrival,
+        isFeatured: this.props.featured,
         errors: '',
     }
 
@@ -31,6 +33,11 @@ class EditForm extends Component {
                     this.setState({ allVendors: allVendors })
                 }
             })
+    }
+
+    componentDidUpdate() {
+        console.log('new Arrival?' + this.state.isNewArrival);
+        console.log('Featured ?' + this.state.isFeatured);
     }
     
     handleInput = (type, e) => {
@@ -88,6 +95,22 @@ class EditForm extends Component {
         this.setState({ itemVendor: vendor.vendor })
     }
 
+    handleNewArrival = (e, value) => {
+        if (value === 'yes' && e.target.value === 'on') {
+            this.setState({ isNewArrival: true })
+        } else if (value === 'no' && e.target.value === 'on') {
+            this.setState({ isNewArrival: false })
+        }
+    }
+
+    handleFeatured = (e, value) => {
+        if (value === 'yes' && e.target.value === 'on') {
+            this.setState({ isFeatured: true })
+        } else if (value === 'no' && e.target.value === 'on') {
+            this.setState({ isFeatured: false })
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
@@ -98,6 +121,8 @@ class EditForm extends Component {
             price: this.state.itemPrice,
             vendor: this.state.itemVendor,
             category: this.state.itemCategory,
+            newArrival: this.state.isNewArrival,
+            featured: this.state.isFeatured
         })
             .then(res => {
                 console.log(res);
@@ -144,6 +169,41 @@ class EditForm extends Component {
                             <Dropdown.Item onClick={(e) => this.categoryHandler('Football', e)}>Football</Dropdown.Item>
                             <Dropdown.Item onClick={(e) => this.categoryHandler('Other', e)}>Other</Dropdown.Item>
                         </DropdownButton>
+
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Add to New Arrivals?</Form.Label>
+                            <Form.Check
+                                onChange={(e) => this.handleNewArrival(e, 'yes')}
+                                type="radio"
+                                label="Yes"
+                                name="newArrivalRadio"
+                                id="newArrivalTrue"
+                            />
+                            <Form.Check
+                                onChange={(e) => this.handleNewArrival(e, 'no')}
+                                type="radio"
+                                label="No"
+                                name="newArrivalRadio"
+                                id="newArrivalFalse"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formItemPrice">
+                            <Form.Label>Add to Featured Items?</Form.Label>
+                            <Form.Check
+                                onChange={(e) => this.handleFeatured(e, 'yes')}
+                                type="radio"
+                                label="Yes"
+                                name="featuredRadio"
+                                id="featuredTrue"
+                            />
+                            <Form.Check
+                                onChange={(e) => this.handleFeatured(e, 'no')}
+                                type="radio"
+                                label="No"
+                                name="featuredRadio"
+                                id="featuredFalse"
+                            />
+                        </Form.Group>
                         
                         <Button onClick={(e) => this.handleSubmit(e)} variant="success">Add Item</Button>
                     </Form>

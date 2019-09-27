@@ -22,6 +22,8 @@ class EditItem extends Component {
         itemVendor: '',
         itemCategory: '',
         itemImage: '',
+        isNewArrival: false,
+        isFeatured: false,
     }
 
     componentDidMount() {
@@ -49,7 +51,9 @@ class EditItem extends Component {
             itemPrice: item.price,
             itemVendor: item.vendor,
             itemCategory: item.category,
-            itemImage: item.itemImage
+            itemImage: item.itemImage,
+            isNewArrival: item.newArrival,
+            isFeatured: item.featured
         })
     }
 
@@ -92,7 +96,8 @@ class EditItem extends Component {
                             price={this.state.itemPrice}
                             vendor={this.state.itemVendor}
                             category={this.state.itemCategory}
-                            image={this.state.itemImage}
+                            newArrival={this.state.isNewArrival}
+                            featured={this.state.isFeatured}
                         />)}
 
                 </Container>

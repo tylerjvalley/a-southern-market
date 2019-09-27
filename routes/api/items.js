@@ -43,6 +43,8 @@ router.post('/addItem', upload.single('itemImage'), (req, res) => {
                 vendor: req.body.vendor,
                 category: req.body.category,
                 itemImage: req.file.path,
+                newArrival: req.body.newArrival,
+                featured: req.body.featured
             });
             
             newItem
@@ -76,6 +78,8 @@ router.put('/update/:id', (req, res) => {
             item.price = req.body.price;
             item.vendor = req.body.vendor;
             item.category = req.body.category;
+            item.newArrival = req.body.newArrival;
+            item.featured = req.body.featured;
             item.save().then(item => {
                 res.json('Item Updated')
             })

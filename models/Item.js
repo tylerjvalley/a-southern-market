@@ -32,6 +32,16 @@ const ItemSchema = new Schema({
         required: false
     },
 
+    newArrival: {
+        type: Boolean,
+        default: false
+    },
+
+    featured: {
+        type: Boolean,
+        default: false
+    },
+
     date: {
         type: Date,
         default: Date.now
