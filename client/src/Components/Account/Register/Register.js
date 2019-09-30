@@ -66,11 +66,11 @@ class Register extends Component {
             password2: this.state.password2
         }
 
-        axios.post('http://localhost:5000/api/users/register', newUser)
+        axios.post('/api/users/register', newUser)
              .then(res => {
                  console.log('Sucessfully Signed In')
 
-                 axios.post('http://localhost:5000/api/users/login', newUser)
+                 axios.post('/api/users/login', newUser)
                       .then(res => {
                           setInStorage('southern_market', { token: res.data.token });
                           this.setState({ redirect: true })

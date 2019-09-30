@@ -28,7 +28,7 @@ class AddItem extends Component {
 
     componentDidMount() {
         //get all vendors from db and store them in state
-        axios.get('http://localhost:5000/api/vendors/all')
+        axios.get('/api/vendors/all')
              .then(res => {
                  if (res) {
                      const allVendors = [];
@@ -132,7 +132,7 @@ class AddItem extends Component {
         fd.append('newArrival', this.state.newArrival);
         fd.append('featured', this.state.featured);
        
-        axios.post('http://localhost:5000/api/items/addItem', fd)
+        axios.post('/api/items/addItem', fd)
             .then(res => {
                 console.log(res);
                 window.location.reload();

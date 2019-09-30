@@ -30,7 +30,7 @@ class AllStates extends Component {
         window.scrollTo(0, 0);
         let url = this.props.history.location.pathname;
         this.setState({ activeState: url }, function(){});
-        axios.get('http://localhost:5000/api/vendors/all')
+        axios.get('/api/vendors/all')
             .then(res => {
                 if (res) {
                     const allVendors = [];

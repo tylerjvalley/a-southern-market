@@ -22,7 +22,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/items/all')
+        axios.get('/api/items/all')
             .then(res => {
                 if (res) {
                     let newArrivals, featured

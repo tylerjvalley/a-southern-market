@@ -28,7 +28,7 @@ class EditItem extends Component {
 
     componentDidMount() {
         //get all vendors 
-        axios.get('http://localhost:5000/api/items/all')
+        axios.get('/api/items/all')
             .then(res => {
                 if (res) {
                     const items = [];

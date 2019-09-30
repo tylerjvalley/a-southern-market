@@ -27,7 +27,7 @@ class AllCategories extends Component {
         this.setState({ activeState: url }, function () { });
 
         //get all items
-        axios.get('http://localhost:5000/api/items/all')
+        axios.get('/api/items/all')
             .then(res => {
                 if (res) {
                     const items = [];

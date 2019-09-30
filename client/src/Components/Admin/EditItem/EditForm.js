@@ -23,7 +23,7 @@ class EditForm extends Component {
 
     componentDidMount() {
         //get all vendors from db and store them in state
-        axios.get('http://localhost:5000/api/vendors/all')
+        axios.get('/api/vendors/all')
             .then(res => {
                 if (res) {
                     const allVendors = [];

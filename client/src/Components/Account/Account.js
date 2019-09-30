@@ -60,7 +60,7 @@ class Account extends Component {
             password: this.state.loginPassword
         }
 
-        axios.post('http://localhost:5000/api/users/login', user)
+        axios.post('/api/users/login', user)
              .then(res => {
                  setInStorage('southern_market', { token: res.data.token });
                  this.setState({

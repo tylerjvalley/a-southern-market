@@ -198,7 +198,7 @@ class EditForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.put('http://localhost:5000/api/vendors/update/' + this.state.vendorId, {
+        axios.put('/api/vendors/update/' + this.state.vendorId, {
             name: this.state.vendorName,
             description: this.state.vendorDesc,
             street: this.state.street,

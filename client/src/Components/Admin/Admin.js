@@ -22,11 +22,11 @@ class Admin extends Component {
         const obj = getFromStorage('southern_market');
 
         if (obj && obj.token) {
-            axios.get(`http://localhost:5000/api/users/verify?token=${obj.token}`, obj.token)
+            axios.get(`/api/users/verify?token=${obj.token}`, obj.token)
                 .then(res => {
                     this.setState({ user: res.data.id[0].userId })
 
-                    axios.get(`http://localhost:5000/api/users/${this.state.user}`)
+                    axios.get(`/api/users/${this.state.user}`)
                         .then(res => {
                             if (res.data.isAdmin) {
                                 this.setState({ isAdmin: true })

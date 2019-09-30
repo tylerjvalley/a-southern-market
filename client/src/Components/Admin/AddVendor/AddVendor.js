@@ -217,7 +217,7 @@ class AddVendor extends Component {
         fd.append('vendorImage', this.state.image);
 
         
-        axios.post('http://localhost:5000/api/vendors/addVendor', fd)
+        axios.post('/api/vendors/addVendor', fd)
              .then(res => {
                  console.log(res);
                  window.location.reload();
