@@ -14,10 +14,7 @@ const football = (props) => {
                         <Card.Title style={{ color: 'black' }} className="na-item">{item.name}</Card.Title>
                         <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
                         <ItemModal
-                            id={item._id}
-                            name={item.name}
-                            description={item.description}
-                            vendor={item.vendor} />
+                            item={item} />
                     </Card.Body>
                 </Card>
             )

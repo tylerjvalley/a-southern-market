@@ -34,9 +34,10 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:5000",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2"
-  },
+  }
 
-  "proxy": "http://localhost:5000/api"
+ 
 }
