@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Baby from '../Baby';
-import Clothing from '../Clothing';
-import Food from '../Food';
-import Football from '../Football';
-import Gifts from '../Gifts';
-import Home from '../Home';
-import Novelties from '../Novelties';
-import Other from '../Other';
-import NewArrivals from '../NewArrivals';
+import Baby from '../Categories/Baby';
+import Clothing from '../Categories/Clothing';
+import Food from '../Categories/Food';
+import Football from '../Categories/Football';
+import Gifts from '../Categories/Gifts';
+import Home from '../Categories/Home';
+import Novelties from '../Categories/Novelties';
+import Other from '../Categories/Other';
+import NewArrivals from '../Categories/NewArrivals';
 import axios from 'axios';
 import './Main.css';
 

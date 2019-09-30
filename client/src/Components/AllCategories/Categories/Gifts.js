@@ -1,8 +1,8 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import ItemModal from '../ItemModal/ItemModal';
 
-const baby = (props) => {
+const gifts = (props) => {
 
     let items;
     if (props.items.length > 0) {
@@ -11,11 +11,13 @@ const baby = (props) => {
             return (
                 <Card key={item._id} className="product" style={{ backgroundImage: "url(" + imageSource + ")" }}>
                     <Card.Body>
-                        <Card.Title style={{ color: 'black' }} className="na-item">{item.name}</Card.Title>
-                        <Card.Text style={{ color: 'black' }} className="na-item">{item.description}</Card.Text>
-                        <Card.Text style={{ color: 'black' }} className="na-item">Vendor: {item.vendor}</Card.Text>
+                        <Card.Title style={{ color: 'white' }} className="na-item">{item.name}</Card.Title>
                         <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                        <Button>Check it out</Button>
+                        <ItemModal
+                            id={item._id}
+                            name={item.name}
+                            description={item.description}
+                            vendor={item.vendor} />
                     </Card.Body>
                 </Card>
             )
@@ -32,4 +34,4 @@ const baby = (props) => {
     );
 }
 
-export default baby;
+export default gifts;
