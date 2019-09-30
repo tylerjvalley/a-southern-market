@@ -13,6 +13,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require('../../models/User');
 const UserSession = require('../../models/UserSession');
+const Item = require('../../models/Item');
 
 router.post('/register', (req, res) => {
     // Form validation
@@ -140,6 +141,33 @@ router.get('/:id', (req, res) => {
             console.log(err);
         } else {
             res.json(user);
+        }
+    })
+})
+
+//add to wishlist
+router.post('/wishList', (req, res) => {
+    let id = req.params.userId;
+    let item = req.params.item
+
+    User.findById(id, (err, user) => {
+        if (err) {
+            console.log(err)
+        } else {
+            User.updateOne({ _id: id }, { $push: {wishList: item} } );
+            User.save((err, doc) => {
+                if (err) {
+                    res.send({
+                        success: false,
+                        error: err
+                    })
+                }
+                return res.send({
+                    success: true,
+                    message: 'Item added to wishlist',
+                    item: doc._id,
+                });
+            })
         }
     })
 })

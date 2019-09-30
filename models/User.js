@@ -22,6 +22,16 @@ const UserSchema = new Schema({
         required: true
     },
 
+    wishList: {
+        type: Array,
+        required: false
+    },
+
+    cart: {
+        type: Array,
+        required: false
+    },
+
     date: {
         type: Date,
         default: Date.now
