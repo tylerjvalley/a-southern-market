@@ -80,7 +80,7 @@ class Dashboard extends Component {
 
     logoutHandler = () => {
         
-        axios.post(`http://localhost:5000/api/users/logout?token=${this.state.token}`)
+        axios.post(`/api/users/logout?token=${this.state.token}`)
             .then(res => {
                 localStorage.removeItem('southern_market')
                 console.log('Logged out')
