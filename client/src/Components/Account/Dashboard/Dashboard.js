@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
     state = {
         user: '',
-        userId: '',
+        wishlist: [],
         isAdmin: false,
         activeState: null,
         redirect: false,
@@ -45,7 +45,7 @@ class Dashboard extends Component {
                              
                              this.setState({ 
                                  user: user.data.firstName,
-                                 userId: user.data._id,
+                                 wishlist: user.data.wishList,
                                  isAdmin: user.data.isAdmin
                              })
                          })
@@ -107,7 +107,7 @@ class Dashboard extends Component {
                 break;
             case '/dashboard/Wishlist':
                 heading = (<h1>Your Wishlist</h1>)
-                content = (<Wishlist user={this.state.userId} />)
+                content = (<Wishlist wishlist={this.state.wishlist} />)
                 break;
             case '/dashboard/Favorites':
                 heading = (<h1>Favorites</h1>)
