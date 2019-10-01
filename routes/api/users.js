@@ -146,29 +146,37 @@ router.get('/:id', (req, res) => {
 
 //add to wishlist
 router.post('/wishList', (req, res) => {
-    let id = req.params.userId;
-    let item = req.params.item
+    const itemReq = req.body.item;
+    let id = req.body.userId;
 
-    User.findById(id, (err, user) => {
-        if (err) {
-            console.log(err)
-        } else {
-            User.updateOne({ _id: id }, { $push: {wishList: item} } );
-            User.save((err, doc) => {
-                if (err) {
-                    res.send({
-                        success: false,
-                        error: err
-                    })
-                }
+    let item = {
+        "_id": itemReq._id,
+        "name": itemReq.name,
+        "description": itemReq.description,
+        "price": itemReq.price,
+        "vendor": itemReq.vendor,
+        "category": itemReq.category,
+        "itemImage": itemReq.itemImage
+    }
+    
+    User.findOneAndUpdate(
+        { _id: id },
+        { $push: { wishList: item } },
+        function (error, success) {
+            if (error) {
+                return res.send({
+                    success: false,
+                    message: 'Error adding to wishlist'
+                })
+            } else {
                 return res.send({
                     success: true,
-                    message: 'Item added to wishlist',
-                    item: doc._id,
-                });
-            })
-        }
-    })
+                    message: 'Added to wishlist'
+                })
+            }
+        });
+    
+    
 })
 
 //Logout route

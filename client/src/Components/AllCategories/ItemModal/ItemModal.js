@@ -13,6 +13,7 @@ class ItemModal extends Component {
     }
 
     componentDidMount() {
+       
         const obj = getFromStorage('southern_market');
 
         if (obj && obj.token) {
@@ -50,17 +51,18 @@ class ItemModal extends Component {
 
     addToWishlist = () => {
         const obj = {
-            user: this.state.user,
+            userId: this.state.user,
             item: this.state.item
-        }/*
-        axios.post('localhost:5000/api/users/wishlist', obj)
+        }
+        axios.post('/api/users/wishlist', obj)
              .then(res => {
                  console.log(res);
              })
              .catch(err => {
                  console.log(err);
              })
-             */
+             
+             
     }
     render() {
     
