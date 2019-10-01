@@ -2,6 +2,7 @@ import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
 import './HomeJumbo.css';
 
 const homeJumbo = () => (
@@ -11,7 +12,7 @@ const homeJumbo = () => (
         <Container className="all-products-card">
             <h1>All Products</h1>
             <p style={{ fontWeight: 'bold' }}>Click here to browse all products</p>
-            <Button variant="primary">Browse</Button>
+            <Link to="/categories/New-Arrivals"><Button variant="primary">Browse</Button></Link>
         </Container> 
         
 
@@ -27,7 +28,7 @@ const homeJumbo = () => (
         <Container className="featured-card">
             <h1 className="featured-text">Featured Store</h1>
             <h1 className="featured-text featured-store">Bertha's  Paintings</h1>
-            <Button variant="primary">Browse</Button>
+            <Link to="/states/Alabama"><Button variant="primary">Browse</Button></Link>
         </Container>
 
       

@@ -61,28 +61,32 @@ class Home extends Component {
                 </div>
 
                 <Collections
+                    link="Novelties-and-Art"
                     image={ArtsyImage}
                     title="Novelties and Art" />
 
                 <Collections
+                    link="Gifts"
                     image={GiftsImage}
                     title="Gifts" />
 
                 <Collections
+                    link="Home"
                     image={HomeImage}
                     title="For Your Home" />
 
                 <Collections
+                    link="Football"
                     image={SportsFanImage}
                     title="For Sports Fans" />
                 
                 <Collections 
+                    link="Food"
                     image={FoodImage}
                     title="Food and Drink"/>
 
                 <div className="new-arrivals">
                     <h1>Featured</h1>
-                    <h4><a href="/">Shop All</a></h4>
                     <hr />
                 </div>
 
@@ -91,7 +95,7 @@ class Home extends Component {
 
                 <div className="new-arrivals">
                     <h1>New Arrivals</h1>
-                    <h4><a href="/">Shop All</a></h4>
+                    <h4><Link to="/categories/New-Arrivals">Shop All</Link></h4>
                     <hr />
                 </div>
             

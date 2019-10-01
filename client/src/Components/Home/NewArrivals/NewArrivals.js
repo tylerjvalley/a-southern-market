@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import Button from 'react-bootstrap/Button';
+import ItemModal from '../../AllCategories/ItemModal/ItemModal';
 import Card from 'react-bootstrap/Card';
 import './NewArrivals.css';
 
@@ -18,10 +18,10 @@ const newArrivals = (props) => {
                 <Carousel.Item key={item._id}>
                     <Card className="new-arrivals-card" style={{ backgroundImage: "url(" + imageSource + ")", margin: 'auto' }}>
                         <Card.Body>
-                            <Card.Title style={{ color: 'black' }} className="na-item">{item.name}</Card.Title>
-                            <Card.Title style={{ color: 'black' }} className="na-item">{item.vendor}</Card.Title>
+                            <Card.Title style={{ color: 'white' }} className="na-item">{item.name}</Card.Title>
                             <hr style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
-                            <Button>Check it out</Button>
+                            <ItemModal
+                                item={item} />
                         </Card.Body>
                     </Card>
                 </Carousel.Item>
