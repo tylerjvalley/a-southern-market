@@ -115,7 +115,7 @@ class EditForm extends Component {
         e.preventDefault();
 
     
-        axios.put('http://localhost:5000/api/items/update/' + this.state.itemId, {
+        axios.put('/api/items/update/' + this.state.itemId, {
             name: this.state.itemName,
             description: this.state.itemDesc,
             price: this.state.itemPrice,

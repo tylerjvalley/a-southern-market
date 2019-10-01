@@ -15,6 +15,9 @@ class Dashboard extends Component {
 
     state = {
         user: '',
+        userId: '',
+        lastName: '',
+        email: '',
         wishlist: [],
         isAdmin: false,
         activeState: null,
@@ -42,9 +45,11 @@ class Dashboard extends Component {
                     //get user information based on token and userId
                     axios.get(`/api/users/${res.data.id[0].userId}`)
                          .then(user => {
-                             
                              this.setState({ 
+                                 userId: user.data._id,
                                  user: user.data.firstName,
+                                 lastName: user.data.lastName,
+                                 email: user.data.email,
                                  wishlist: user.data.wishList,
                                  isAdmin: user.data.isAdmin
                              })
@@ -115,7 +120,10 @@ class Dashboard extends Component {
                 break;
             case '/dashboard/Settings':
                 heading = (<h1>Settings</h1>)
-                content = (<Settings />)
+                content = (<Settings id={this.state.userId}
+                                     firstName={this.state.user}
+                                     lastName={this.state.lastName}
+                                     email={this.state.email} />)
                 break;
             case '/dashboard/Admin':
                 heading = (<h1>Admin</h1>)

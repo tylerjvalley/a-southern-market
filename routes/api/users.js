@@ -131,7 +131,6 @@ router.get('/verify', (req, res) => {
 })
 
 //get user
-
 router.get('/:id', (req, res) => {
     let id = req.params.id;
 
@@ -144,7 +143,9 @@ router.get('/:id', (req, res) => {
     })
 })
 
-//add to wishlist
+
+
+//add item to wishlist
 router.post('/wishList', (req, res) => {
     const itemReq = req.body.item;
     let id = req.body.userId;
@@ -177,6 +178,38 @@ router.post('/wishList', (req, res) => {
         });
     
     
+})
+
+
+//Edit User
+router.put('/update/:id', (req, res) => {
+    const { errors, isValid } = validateRegisterInput(req.body);
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    User.findById(req.params.id, (err, user) => {
+        if (!user) {
+            res.status(404).send('User not found');
+        } else {
+            user.firstName = req.body.firstName;
+            user.lastName = req.body.lastName;
+            user.email = req.body.email;
+            user.password = req.body.password;
+            // Hash password before saving in database
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(user.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    user.password = hash;
+                    user
+                        .save()
+                        .then(user => res.json(user))
+                        .catch(err => console.log(err));
+                });
+            });
+        }   
+    })
 })
 
 //Logout route
