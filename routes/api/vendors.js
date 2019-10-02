@@ -105,6 +105,25 @@ router.put('/update/:id', (req, res) => {
     })
 })
 
+//Change image
+
+router.put('/changeImage/:id', upload.single('vendorImage'), (req, res) => {
+    
+    Vendor.findById(req.params.id, (err, vendor) => {
+        if (!vendor) {
+            res.status(400).send('Data was not found');
+        } else {
+            vendor.vendorImage = req.file.path;
+            vendor.save().then(vendor => {
+                res.json('Image Updated')
+            })
+            .catch(err => {
+                res.status(400).send('Update did not go through')
+            })
+        }
+    })
+});
+
 
 
 

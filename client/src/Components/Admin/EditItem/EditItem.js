@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import EditForm from './EditForm';
+import EditImage from '../EditVendor/EditImage';
 import axios from 'axios';
 
 
@@ -80,7 +81,7 @@ class EditItem extends Component {
             const itemSource = `../../../../../${item.itemImage}`
             return (
                 <Card key={item._id} style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={itemSource} />
+                    <EditImage id={item._id} imageType={'itemImage'} type={'items'} image={itemSource} />
                     <Card.Body>
                         <Card.Title>{item.name}</Card.Title>
                         <Card.Text>

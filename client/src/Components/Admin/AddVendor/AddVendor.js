@@ -205,7 +205,7 @@ class AddVendor extends Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
 
         const fd = new FormData();
         fd.append('name', this.state.vendorName);

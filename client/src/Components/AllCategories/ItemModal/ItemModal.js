@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import { getFromStorage } from '../../../assets/utils';
+import { getFromStorage } from '../../../assets/utils'; 
 
 class ItemModal extends Component {
 

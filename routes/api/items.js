@@ -113,7 +113,26 @@ router.delete('/delete/:id', (req, res) => {
         .catch(err => {
             console.log('Something went wrong')
         })
-})
+}) 
+
+//Change image
+
+router.put('/changeImage/:id', upload.single('itemImage'), (req, res) => {
+
+    Item.findById(req.params.id, (err, item) => {
+        if (!item) {
+            res.status(400).send('Data was not found');
+        } else {
+            item.itemImage = req.file.path;
+            item.save().then(item => {
+                res.json('Image Updated')
+            })
+                .catch(err => {
+                    res.status(400).send('Update did not go through')
+                })
+        }
+    })
+});
 
 
 

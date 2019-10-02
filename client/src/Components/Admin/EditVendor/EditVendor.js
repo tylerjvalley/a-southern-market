@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import EditForm from './EditForm';
+import EditImage from './EditImage';
 import axios from 'axios';
 
 
@@ -56,10 +57,11 @@ class EditVendor extends Component {
 
     render() {
 
-          const cards = this.state.vendors.map(vendor => {
-              
+          const cards = this.state.vendors.map(vendor => { 
+              const vendorSource = `../../../../../${vendor.vendorImage}`
                 return (
                     <Card key={vendor._id} style={{ width: '18rem' }}>
+                        <EditImage id={vendor._id} imageType={'vendorImage'} type={'vendors'} image={vendorSource} />
                         <Card.Body>
                             <Card.Title>{vendor.name}</Card.Title>
                             <Card.Text>
@@ -78,6 +80,7 @@ class EditVendor extends Component {
             <div className="register-page">
                 <div className="register-page-top">
                     <Link to="/dashboard/Admin" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
+                    
                     <h1>Edit Vendor</h1>
                 </div>
                 <Container style={{display: 'flex'}}>
