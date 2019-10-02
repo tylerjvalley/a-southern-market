@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
+import VendorModal from './VendorModal/VendorModal';
 
 const southCarolina = (props) => {
 
@@ -18,6 +19,9 @@ const southCarolina = (props) => {
                     <Col>
                         <h2>{vendor.name}</h2>
                         <p>{vendor.description}</p>
+                    </Col>
+                    <Col>
+                        <VendorModal vendor={vendor} />
                     </Col>
                 </Row>
             )
