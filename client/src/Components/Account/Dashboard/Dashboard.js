@@ -99,8 +99,6 @@ class Dashboard extends Component {
         
     }
 
-
-
     render() {
 
         let heading, content;
@@ -112,7 +110,8 @@ class Dashboard extends Component {
                 break;
             case '/dashboard/Wishlist':
                 heading = (<h1>Your Wishlist</h1>)
-                content = (<Wishlist wishlist={this.state.wishlist} />)
+                content = (<Wishlist wishlist={this.state.wishlist}
+                                     user={this.state.userId} />)
                 break;
             case '/dashboard/Favorites':
                 heading = (<h1>Favorites</h1>)

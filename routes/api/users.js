@@ -180,6 +180,40 @@ router.post('/wishList', (req, res) => {
     
 })
 
+//delete item from wishlist
+router.post('/wishList/delete', (req, res) => {
+    let id = req.body.userId;
+    const itemReq = req.body.item;
+
+    let item = {
+        "_id": itemReq._id,
+        "name": itemReq.name,
+        "description": itemReq.description,
+        "price": itemReq.price,
+        "vendor": itemReq.vendor,
+        "category": itemReq.category,
+        "itemImage": itemReq.itemImage
+    }
+
+    User.findOneAndUpdate(
+        { _id: id },
+        { $pull: { wishList: item } },
+        function (error, success) {
+            if (error) {
+                return res.send({
+                    success: false,
+                    message: 'Error removing from wishlist'
+                })
+            } else {
+                return res.send({
+                    success: true,
+                    message: 'Removed from wishlist'
+                })
+            }
+        });
+
+})
+
 
 //Edit User
 router.put('/update/:id', (req, res) => {

@@ -57,6 +57,19 @@ class EditItem extends Component {
         })
     }
 
+    handleDelete = (item, e) => {
+        e.preventDefault();
+
+        axios.delete('/api/items/delete/' + item._id)
+             .then(res => {
+                 console.log(res);
+                 window.location.reload();
+             })
+             .catch(err => {
+                 console.log(err);
+             })
+    }
+
     
 
     render() {
@@ -76,6 +89,7 @@ class EditItem extends Component {
                             Price: ${item.price}
                         </Card.Text>
                         <Button onClick={(e) => this.handleSelect(item, e)} variant="primary">Edit</Button>
+                        <Button onClick={(e) => this.handleDelete(item, e)} variant="danger">Delete</Button>
                     </Card.Body>
                 </Card>
             )

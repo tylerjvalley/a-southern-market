@@ -101,6 +101,18 @@ router.get('/:id', (req, res) => {
             res.json(user);
         }
     })
+});
+
+//Delete item
+
+router.delete('/delete/:id', (req, res) => {
+    Item.findByIdAndDelete(req.params.id)
+        .then(item => {
+            console.log('Deleted successfully');
+        })
+        .catch(err => {
+            console.log('Something went wrong')
+        })
 })
 
 

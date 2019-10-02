@@ -54,7 +54,7 @@ class ItemModal extends Component {
             userId: this.state.user,
             item: this.state.item
         }
-        axios.post('/api/users/wishlist', obj)
+        axios.post('/api/users/wishList', obj)
              .then(res => {
                  console.log(res);
              })
