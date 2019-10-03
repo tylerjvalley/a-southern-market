@@ -8,6 +8,10 @@ class Cart extends Component {
 
     }
 
+    componentDidMount() {
+        
+    }
+
 
     render() {
         return (
