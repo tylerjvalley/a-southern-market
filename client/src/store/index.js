@@ -1,6 +1,16 @@
-import { createStore } from 'redux';
 import rootReducer from '../reducers/index';
-const store = createStore(rootReducer);
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+const initialState = {};
+const middleware = [thunk]
+
+const store = createStore(
+    rootReducer, /* preloadedState, */
+    initialState,
+    applyMiddleware(...middleware)
+    +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 
 

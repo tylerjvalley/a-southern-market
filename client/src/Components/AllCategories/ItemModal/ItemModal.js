@@ -3,6 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { getFromStorage } from '../../../assets/utils'; 
+//redux
+import { connect } from 'react-redux';
+import { addToCart } from '../../../actions/index';
 
 class ItemModal extends Component {
 
@@ -60,10 +63,15 @@ class ItemModal extends Component {
              })
              .catch(err => {
                  console.log(err);
-             })
-             
+             })        
              
     }
+
+    addToCart = () => {
+        const item = this.state.item;
+        this.props.addToCart({item}, () => console.log(item))
+    }
+
     render() {
     
         return (
@@ -87,7 +95,7 @@ class ItemModal extends Component {
                         <Button variant="primary" onClick={this.addToWishlist}>
                             Add to Wishlist
                         </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
+                        <Button variant="primary" onClick={this.addToCart}>
                             Add to Cart
                         </Button>
 
@@ -98,4 +106,10 @@ class ItemModal extends Component {
     }
 }
 
-export default ItemModal
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: item => dispatch(addToCart(item))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ItemModal);

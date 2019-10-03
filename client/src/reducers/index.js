@@ -1,22 +1,6 @@
-import { ADD_TO_CART } from '../actions/types';
+import { combineReducers } from 'redux';
+import cartReducer from './cartReducer';
 
-
-const initialState = {
-    items: []
-};
-
-
-function rootReducer(state = initialState, action) {
-   switch (action.type) {
-        case ADD_TO_CART:
-            return Object.assign({}, state, {
-                items: state.items.concat(action.payload)
-            });
-               
-        default:
-            return state;
-   }
-};
-
-
-export default rootReducer;
+export default combineReducers({
+    cart: cartReducer,
+});
