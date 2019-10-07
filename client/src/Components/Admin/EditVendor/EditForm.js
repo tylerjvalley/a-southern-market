@@ -207,19 +207,32 @@ class EditForm extends Component {
             zipCode: this.state.zip
         })
         .then(res => {
-            console.log(res);
+           this.setState({ errors: 'Successfully Edited Vendor'})
             window.location.reload();
         })
         .catch(err => {
-            console.log(err);
+            this.setState({ errors: err.response.data })
         })
     }
 
     render() {
 
-    
+         let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+
         return (
             <div className="register-page" style={{ margin: 'auto' }}>
+                <div className="errors-bar">
+                    {errors}
+                </div>
                 <Container>
                     <Form>
                         <Form.Group controlId="formName">

@@ -12,7 +12,8 @@ class ItemModal extends Component {
     state = {
         show: false,
         user: '',
-        item: this.props.item
+        item: this.props.item,
+        errors: '',
     }
 
     componentDidMount() {
@@ -57,22 +58,37 @@ class ItemModal extends Component {
             userId: this.state.user,
             item: this.state.item
         }
-        axios.post('/api/users/wishList', obj)
-             .then(res => {
-                 console.log(res);
-             })
-             .catch(err => {
-                 console.log(err);
-             })        
-             
+
+        if (this.state.user) {
+            axios.post('/api/users/wishList', obj)
+                .then(res => {
+                    this.setState({ errors: res });
+                })
+                .catch(err => {
+                    this.setState({ errors: err.response.data });
+                })
+
+        } else {
+            this.setState({ errors: 'Must be logged in'})
+        }
+       
     }
 
     addToCart = () => {
         const item = this.state.item;
-        this.props.addToCart({item}, () => console.log(item))
+        this.props.addToCart({item});
+        this.setState({ errors: 'Added to Cart'})
     }
 
     render() {
+
+        let errors;
+
+        if (this.state.errors) {
+            errors = this.state.errors
+        } else {
+            errors = null;
+        }
     
         return (
             <> 
@@ -81,6 +97,9 @@ class ItemModal extends Component {
                 </Button>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
+                    <div className="errors-bar">
+                        {errors}
+                    </div>
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.item.name}</Modal.Title>
                     </Modal.Header>

@@ -2,7 +2,6 @@ import { ADD_TO_CART, GET_ITEMS } from '../actions/types';
 
 const initialState = {
     items: [],
-    item: {}
 };
 
 

@@ -17,6 +17,7 @@ class Register extends Component {
         email: '',
         password: '',
         password2: '',
+        registerError: '',
         redirect: false,
     }
 
@@ -68,19 +69,17 @@ class Register extends Component {
 
         axios.post('/api/users/register', newUser)
              .then(res => {
-                 console.log('Sucessfully Signed In')
-
                  axios.post('/api/users/login', newUser)
                       .then(res => {
                           setInStorage('southern_market', { token: res.data.token });
-                          this.setState({ redirect: true })
+                          this.setState({ redirect: true, registerError: 'Successfully Signed In' })
                       })
                       .catch(err => {
-                          console.log('Problem loggin in', err)
+                          this.setState({ registerError: err.response.data })
                       })
              })
              .catch(err => {
-                 console.log(err);
+                 this.setState({ registerError: err.response.data })
              })   
 
     }
@@ -88,10 +87,24 @@ class Register extends Component {
 
     render() {
 
+        let errors;
+
+        if (this.state.registerError) {
+            errors = Object.values(this.state.registerError);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+
         return (
             <div className="register-page">
                 {this.renderRedirect()}
                 <div className="register-page-top">
+                    <div className="errors-bar">
+                        {errors}
+                    </div>
                     <Link to="/account" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
                     <h1>Create an Account</h1>             
                 </div>

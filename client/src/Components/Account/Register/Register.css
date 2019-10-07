@@ -17,3 +17,11 @@
     width: 5em;
    
 }
+
+.errors-bar {
+    background: #cacabe;
+    width: 100%;
+    color: white;
+    text-align: center;
+
+}

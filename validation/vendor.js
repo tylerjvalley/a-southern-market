@@ -12,22 +12,22 @@ module.exports = function validateVendorInput(data) {
 
     // Name checks
     if (Validator.isEmpty(data.name)) {
-        errors.name = "Store name is required";
+        errors.name = "Store name is required    ";
     }
     if (Validator.isEmpty(data.description)) {
-        errors.description = "Description is required";
+        errors.description = "Description is required    ";
     }
     if (Validator.isEmpty(data.street)) {
-        errors.street = "Street is required";
+        errors.street = "Street is required    ";
     }
     if (Validator.isEmpty(data.city)) {
-        errors.street = "City is required";
+        errors.street = "City is required    ";
     }
     if (Validator.isEmpty(data.state)) {
-        errors.state = "State is required";
+        errors.state = "State is required    ";
     }
     if (Validator.isEmpty(data.zipCode)) {
-        errors.zipCode = "Zip code is required";
+        errors.zipCode = "Zip code is required    ";
     }
    
     return {

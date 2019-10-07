@@ -54,8 +54,35 @@ class EditVendor extends Component {
         })
     }
 
+    handleDelete = (item, e) => {
+        e.preventDefault();
+        
+
+        axios.delete('/api/vendors/delete/' + item._id)
+             .then(res => {
+                 this.setState({ errors: 'Successfully Deleted'})
+             })
+             .catch(err => {
+                 this.setState({ errors: err });
+             })
+
+        this.setState({ errors: 'Successfully Deleted' })
+             
+    }
+
 
     render() {
+
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
 
           const cards = this.state.vendors.map(vendor => { 
               const vendorSource = `../../../../../${vendor.vendorImage}`
@@ -68,6 +95,7 @@ class EditVendor extends Component {
                                 {vendor.description}
                             </Card.Text>
                             <Button onClick={(e) => this.handleSelect(vendor, e)} variant="primary">Edit</Button>
+                            <Button onClick={(e) => this.handleDelete(vendor, e)} variant="danger">Delete</Button>
                         </Card.Body>
                     </Card>
                 )
@@ -82,6 +110,9 @@ class EditVendor extends Component {
                     <Link to="/dashboard/Admin" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
                     
                     <h1>Edit Vendor</h1>
+                    <div className="errors-bar">
+                        {errors}
+                    </div>
                 </div>
                 <Container style={{display: 'flex'}}>
                     {!this.state.selected ? ( cards ) : 

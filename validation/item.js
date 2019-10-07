@@ -10,16 +10,16 @@ module.exports = function validateVendorInput(data) {
 
     // Name checks
     if (Validator.isEmpty(data.name)) {
-        errors.name = "Store name is required";
+        errors.name = "Store name is required    ";
     }
     if (Validator.isEmpty(data.description)) {
-        errors.description = "Description is required";
+        errors.description = "Description is required    ";
     }
     if (Validator.isEmpty(data.vendor)) {
-        errors.vendor = "Vendor is required";
+        errors.vendor = "Vendor is required    ";
     }
     if (Validator.isEmpty(data.category)) {
-        errors.category = "Category is required";
+        errors.category = "Category is required    ";
     }
 
 

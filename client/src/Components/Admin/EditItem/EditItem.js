@@ -25,6 +25,7 @@ class EditItem extends Component {
         itemImage: '',
         isNewArrival: false,
         isFeatured: false,
+        errors: '',
     }
 
     componentDidMount() {
@@ -60,22 +61,34 @@ class EditItem extends Component {
 
     handleDelete = (item, e) => {
         e.preventDefault();
+        
 
         axios.delete('/api/items/delete/' + item._id)
              .then(res => {
-                 console.log(res);
-                 window.location.reload();
+                 this.setState({ errors: 'Successfully Deleted'})
              })
              .catch(err => {
-                 console.log(err);
+                 this.setState({ errors: err });
              })
+
+        this.setState({ errors: 'Successfully Deleted' })
+             
     }
 
     
 
     render() {
 
-        
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
 
         const cards = this.state.items.map(item => {
             const itemSource = `../../../../../${item.itemImage}`
@@ -101,6 +114,9 @@ class EditItem extends Component {
                 <div className="register-page-top">
                     <Link to="/dashboard/Admin" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
                     <h1>Edit Item</h1>
+                    <div className="errors-bar">
+                        {errors}
+                    </div>
                 </div>
                 <Container style={{ display: 'flex' }}>
                     {!this.state.selected ? (cards) :

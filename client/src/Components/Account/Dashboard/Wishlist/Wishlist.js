@@ -7,6 +7,10 @@ import axios from 'axios';
 
 class Wishlist extends Component {
 
+    state = {
+        errors: '',
+    }
+
     handleDelete = (item, e) => {
         e.preventDefault();
         const obj = {
@@ -15,15 +19,26 @@ class Wishlist extends Component {
         }
         axios.post('/api/users/wishList/delete', obj)
              .then(res => {
-                 console.log(res);
+                 this.setState({ errors: 'Successfully Deleted '})
                  window.location.reload();
              })
              .catch(err => {
-                 console.log(err);
+                 this.setState({ errors: err });
              })
     }
     
     render() {
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+
         const list = this.props.wishlist.map(item => {
             const itemSource = `../../../../../../${item.itemImage}`
             return (
@@ -41,9 +56,14 @@ class Wishlist extends Component {
             )
         })
         return (
-            <div style={{display: 'flex'}}>
-                {list}
-            </div>
+            <>
+                <div className="errors-bar">
+                    {errors}
+                </div>
+                <div style={{display: 'flex'}}>
+                    {list}
+                </div>
+            </>
         )
     }
     

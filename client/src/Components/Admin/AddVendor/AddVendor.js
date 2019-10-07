@@ -219,20 +219,35 @@ class AddVendor extends Component {
         
         axios.post('/api/vendors/addVendor', fd)
              .then(res => {
-                 console.log(res);
+                 this.setState({ errors: 'Successfully Added'})
                  window.location.reload();
              })
              .catch(err => {
-                 console.log(err);
+                 this.setState({ errors: err.response.data })
              })
     }
 
     render() {
+
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+
         return (
             <div className="register-page">
                 <div className="register-page-top">
                     <Link to="/dashboard/Admin" className="back-button-reg"><Button variant="secondary">Back</Button></Link>
                     <h1>Add Vendor</h1>
+                    <div className="errors-bar">
+                        {errors}
+                    </div>
                 </div>
                 <Container>
                     <Form>

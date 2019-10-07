@@ -124,6 +124,18 @@ router.put('/changeImage/:id', upload.single('vendorImage'), (req, res) => {
     })
 });
 
+//Delete item
+
+router.delete('/delete/:id', (req, res) => {
+    Vendor.findByIdAndDelete(req.params.id)
+        .then(item => {
+            console.log('Deleted successfully');
+        })
+        .catch(err => {
+            console.log('Something went wrong')
+        })
+}) 
+
 
 
 

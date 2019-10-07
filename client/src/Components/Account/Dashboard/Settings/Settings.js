@@ -14,6 +14,7 @@ class Settings extends Component {
         email: this.props.email,
         password: '',
         password2: '',
+        errors: '',
     }
 
     handleInput = (type, e) => {
@@ -47,19 +48,33 @@ class Settings extends Component {
             password2: this.state.password2,
         })
         .then(res => {
-            console.log(res);
+            this.setState({ errors: 'Successfully Updated '})
             window.location.reload();
         })
         .catch(err => {
-            console.log(err);
+            this.setState({ errors: err })
         })
 
         
     }
 
     render() {
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+        
         return (
             <div className="register-page">
+                <div className="errors-bar">
+                    {errors}
+                </div>
                 <Container>
                     <Form>
                         <Form.Group controlId="formBasicFirst">

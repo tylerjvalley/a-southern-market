@@ -67,23 +67,37 @@ class Account extends Component {
                      loginError: 'Successfully logged in',
                      token: res.data.token
                  })
-                 console.log(this.state.loginError);
                  this.setState({ redirect: true })
              })
              .catch(err => {
                  console.log(err)
                  this.setState({
-                     loginError: err.response.data
+                     loginError: err.response.data 
                  })
              })
 
     }
 
     render() {
+        let errors;
+
+        if (this.state.loginError) {
+            errors = Object.values(this.state.loginError);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
+
+
         return (
             <div className="sign-in">
                 {this.renderRedirect()}
                 <Container>
+                    <div className="errors-bar">
+                       {errors}                     
+                    </div>
                     <Row>
                         <Col className="login-form">
                             <h1>Log In</h1>

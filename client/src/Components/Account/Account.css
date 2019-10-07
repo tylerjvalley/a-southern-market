@@ -44,3 +44,12 @@
     width: 40%;
     margin-left: 29%;
 }
+
+.errors-bar {
+    background: #cacabe;
+    width: 100%;
+    color: white;
+    text-align: center;
+    
+}
+

@@ -83,10 +83,10 @@ router.post('/login', (req, res) => {
                     });
                 });
             } else {
-                return res.status(400).json({ password: 'Password incorrect' })
+                return res.status(400).json({ password: 'Password incorrect    ' })
             }
         } else {
-            return res.status(400).json({ username: 'Email not found' })
+            return res.status(400).json({ username: 'Email not found    ' })
         }
     });
 
@@ -166,12 +166,12 @@ router.post('/wishList', (req, res) => {
             if (error) {
                 return res.send({
                     success: false,
-                    message: 'Error adding to wishlist'
+                    message: 'Error adding to wishlist    '
                 })
             } else {
                 return res.send({
                     success: true,
-                    message: 'Added to wishlist'
+                    message: 'Added to wishlist    '
                 })
             }
         });
@@ -201,12 +201,12 @@ router.post('/wishList/delete', (req, res) => {
             if (error) {
                 return res.send({
                     success: false,
-                    message: 'Error removing from wishlist'
+                    message: 'Error removing from wishlist    '
                 })
             } else {
                 return res.send({
                     success: true,
-                    message: 'Removed from wishlist'
+                    message: 'Removed from wishlist    '
                 })
             }
         });

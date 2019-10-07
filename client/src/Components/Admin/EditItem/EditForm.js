@@ -35,11 +35,6 @@ class EditForm extends Component {
             })
     }
 
-    componentDidUpdate() {
-        console.log('new Arrival?' + this.state.isNewArrival);
-        console.log('Featured ?' + this.state.isFeatured);
-    }
-    
     handleInput = (type, e) => {
 
         if (type === 'itemName') {
@@ -125,19 +120,32 @@ class EditForm extends Component {
             featured: this.state.isFeatured
         })
             .then(res => {
-                console.log(res);
+                this.setState({ errors: 'Successfully Edit Item'})
                 window.location.reload();
             })
             .catch(err => {
-                console.log(err);
+                this.setState({ errors: err.response.data })
             })
     }
 
     render() {
 
+        let errors;
+
+        if (this.state.errors) {
+            errors = Object.values(this.state.errors);
+            errors.map(error => {
+                return ({ error })
+            })
+        } else {
+            errors = null;
+        }
 
         return (
             <div className="register-page" style={{ margin: 'auto' }}>
+                <div className="errors-bar">
+                    {errors}
+                </div>
                 <Container>
                     <Form>
                         <Form.Group controlId="formItemName">
