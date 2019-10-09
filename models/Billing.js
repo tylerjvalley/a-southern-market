@@ -23,6 +23,11 @@ const BillingSchema = new Schema({
         require: true
     },
 
+    quantity: {
+        type: Number,
+        required: true
+    },
+
     orderTotal: {
         type: Number,
         require: true

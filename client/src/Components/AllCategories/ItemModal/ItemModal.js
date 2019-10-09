@@ -93,7 +93,7 @@ class ItemModal extends Component {
         return (
             <> 
                 <Button variant="primary" onClick={this.handleShow}>
-                    Check it out
+                    View
                 </Button>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
