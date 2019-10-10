@@ -76,7 +76,7 @@ class ItemModal extends Component {
 
     addToCart = () => {
         const item = this.state.item;
-        this.props.addToCart({item});
+        this.props.addToCart(item);
         this.setState({ errors: 'Added to Cart'})
     }
 

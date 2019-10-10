@@ -1,4 +1,5 @@
-import { ADD_TO_CART, GET_ITEMS } from '../actions/types';
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/types';
+
 
 const initialState = {
     items: [],
@@ -12,9 +13,12 @@ function cartReducer(state = initialState, action) {
                 ...state,
                 items: state.items.concat(action.payload)
             };
-        case GET_ITEMS:
-            return state.items
 
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                items: state.items.filter(item => item._id !== action.id)
+            }
         default:
             return state;
     }

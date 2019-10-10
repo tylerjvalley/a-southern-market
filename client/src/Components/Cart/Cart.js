@@ -8,52 +8,83 @@ import ItemModal from '../AllCategories/ItemModal/ItemModal';
 import './Cart.css';
 //redux
 import { connect } from 'react-redux';
-import { getItems } from '../../actions/index';
+import { removeFromCart } from '../../actions/index';
 
 class Cart extends Component {
 
     state = {
-        tax: '$3.00',
-        subTotal: '$24.97',
-        total: '$27.97'
+        tax: 0,
+        subTotal: 0,
+        total: 0,
+    }
+
+    componentDidMount() {
+        const cartItems = this.props.cart;
+        let subTotal = 0;
+        let total = 0;
+        let tax = 3.5;
+
+        cartItems.forEach(el => {
+            subTotal += el.price
+        })
+
+        total = subTotal + tax;
+
+        this.setState({
+             subTotal: subTotal.toFixed(2),
+             total: total.toFixed(2),
+             tax: tax.toFixed(2),
+        });
+    }
+
+    removeFromCart = item => {
+        this.props.removeFromCart(item._id);
+
+        let subTotal = this.state.subTotal;
+        let total = this.state.total;
+        subTotal -= item.price;
+        total -= item.price;
+        this.setState({
+            subTotal: subTotal.toFixed(2),
+            total: total.toFixed(2)
+        })
+        
     }
 
     render() {
 
         const tableNames = this.props.cart.map(el => {
                 return (
-                    <th>{el.item.name}</th>
+                    <th key={el.name}>{el.name}</th>
                 )
             })
 
         const tablePrices = this.props.cart.map(el => {
             return (
-                <td>${el.item.price}</td>
+                <td key={el.price}>${el.price}</td>
             )
         })
         
-        if (this.props.cart) {
+        if (this.props.cart.length > 0) {
             return (
                 <Container className="cart-container">
                     <h1 style={{ textAlign: 'center' }}>Your Cart</h1>
                     <div className="cart-items">
                         {this.props.cart.map(el => {
-                            const imageSource = `../../../../${el.item.itemImage}`
+                            const imageSource = `../../../../${el.itemImage}`
                             return (
-                                <div key={el.item._id} className="cart-item">
+                                <div key={el._id} className="cart-item">
                                     <Card className="product" style={{ backgroundImage: "url(" + imageSource + ")" }}>
-                                        <ItemModal item={el.item}/>
-                                        <Button variant="danger" onClick={this.handleRemove}>Remove</Button>
+                                        <ItemModal item={el}/>
+                                        <Button variant="danger" onClick={() => this.removeFromCart(el)}>Remove</Button>
                                     </Card> 
-                                    <h4>{el.item.name}</h4> 
-                                    <h6>${el.item.price}</h6>
+                                    <h4>{el.name}</h4> 
+                                    <h6>${el.price}</h6>
                                 </div>
                             )
                         })}
                     </div>
                     <div className="cart-price">
-
-                        
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -67,20 +98,19 @@ class Cart extends Component {
                             <tbody>
                                 <tr>
                                     {tablePrices}
-                                    <td>{this.state.subTotal}</td>
-                                    <td>{this.state.tax}</td>
-                                    <td>{this.state.total}</td> 
+                                    <td>${this.state.subTotal}</td>
+                                    <td>${this.state.tax}</td>
+                                    <td>${this.state.total}</td> 
                                 </tr>             
                             </tbody>
                         </Table>
                     </div>
-
                     <Button variant="success">Continue to Checkout</Button>
                 </Container>
             )
         } else {
             return (
-                <h1>Cart is Empty</h1>
+                <h1 style={{textAlign: 'center'}}>Cart is Empty</h1>
             )
         }
         
@@ -92,18 +122,12 @@ const mapStateToProps = state => ({
     cart: state.cart.items
 })
 
+const mapDispatchToProps = dispatch => {
+    return {
+        removeFromCart: item => dispatch(removeFromCart(item))
+    }
+}
 
-export default connect(mapStateToProps, { getItems })(Cart);
 
-/*
-<tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td colSpan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>*/
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
