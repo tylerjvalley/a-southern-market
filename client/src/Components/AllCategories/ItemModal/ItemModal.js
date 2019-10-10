@@ -62,10 +62,10 @@ class ItemModal extends Component {
         if (this.state.user) {
             axios.post('/api/users/wishList', obj)
                 .then(res => {
-                    this.setState({ errors: res });
+                    this.setState({ errors: res.data.message })
                 })
                 .catch(err => {
-                    this.setState({ errors: err.response.data });
+                    console.log(err);
                 })
 
         } else {

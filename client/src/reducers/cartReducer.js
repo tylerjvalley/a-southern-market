@@ -1,24 +1,27 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/types';
+import * as types from '../actions/types';
 
 
 const initialState = {
     items: [],
+    prices: 0,
 };
 
 
 function cartReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_TO_CART:
+        case types.ADD_TO_CART:
             return {
                 ...state,
                 items: state.items.concat(action.payload)
             };
 
-        case REMOVE_FROM_CART:
+        case types.REMOVE_FROM_CART:
             return {
                 ...state,
                 items: state.items.filter(item => item._id !== action.id)
             }
+        case types.CHANGE_QUANTITY:
+            return state
         default:
             return state;
     }

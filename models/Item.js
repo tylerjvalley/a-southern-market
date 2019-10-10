@@ -42,6 +42,11 @@ const ItemSchema = new Schema({
         default: false
     },
 
+    quantity: {
+        type: Number,
+        default: 1
+    },
+
     date: {
         type: Date,
         default: Date.now

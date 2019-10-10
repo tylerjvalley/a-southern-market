@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import ItemModal from '../AllCategories/ItemModal/ItemModal';
+import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 import './Cart.css';
 //redux
 import { connect } from 'react-redux';
-import { removeFromCart } from '../../actions/index';
+import { removeFromCart, changeQuantity } from '../../actions/index';
 
 class Cart extends Component {
 
@@ -51,11 +53,29 @@ class Cart extends Component {
         
     }
 
+    handleQuantity = (item, e) => {
+        this.props.changeQuantity(item._id, e.target.value)
+    }
+
     render() {
 
         const tableNames = this.props.cart.map(el => {
                 return (
-                    <th key={el.name}>{el.name}</th>
+                    <th key={el.name}>
+                        {el.name}
+                        <Form>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Label style={{fontSize: '.8em'}}>Quantity</Form.Label>
+                                <Form.Control onChange={(e) => this.handleQuantity(el, e)} style={{ width: '15%'}}as="select">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form>
+                    </th>
                 )
             })
 
@@ -105,7 +125,7 @@ class Cart extends Component {
                             </tbody>
                         </Table>
                     </div>
-                    <Button variant="success">Continue to Checkout</Button>
+                    <Link to="/cart/checkout"><Button variant="success">Continue to Checkout</Button></Link>
                 </Container>
             )
         } else {
@@ -124,7 +144,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeFromCart: item => dispatch(removeFromCart(item))
+        removeFromCart: item => dispatch(removeFromCart(item)),
+        changeQuantity: (id, num) => dispatch(changeQuantity(id, num)),
     }
 }
 

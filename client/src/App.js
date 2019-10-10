@@ -9,6 +9,7 @@ import Dashboard from './Components/Account/Dashboard/Dashboard';
 import Admin from './Components/Admin/Admin';
 import Register from './Components/Account/Register/Register';
 import Cart from './Components/Cart/Cart';
+import Checkout from './Components/Cart/Checkout/Checkout';
 import States from './Components/AllStates/Main/Main';
 import Categories from './Components/AllCategories/Main/Main';
 import AddItem from './Components/Admin/AddItem/AddItem';
@@ -33,7 +34,8 @@ function App() {
         <Route path="/sign-up" component={Register} />
         <Route path="/dashboard" component={Dashboard} />
         <Route exact path="/admin" component={Admin} />
-        <Route path="/cart" component={Cart} />
+        <Route exact path="/cart" component={Cart} />
+        <Route path="/cart/checkout" component={Checkout} />
         <Route path="/states/" component={States} />
         <Route path="/categories/" component={Categories} />
         <Route path="/about" component={About} />
