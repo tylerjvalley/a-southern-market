@@ -74,7 +74,7 @@ const BillingSchema = new Schema({
     },
 
     shipping: {
-        type: Number,
+        type: String,
         required: true
     }
 

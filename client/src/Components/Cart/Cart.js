@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import './Cart.css';
 //redux
 import { connect } from 'react-redux';
-import { removeFromCart } from '../../actions/index';
+import { removeFromCart, setTotal } from '../../actions/index';
 
 class Cart extends Component {
 
@@ -81,6 +81,10 @@ class Cart extends Component {
         
     }
 
+    handleSubmit = () => {
+        this.props.setTotal(this.state.total);
+    }
+
     render() {
 
         const tableNames = this.props.cart.map(el => {
@@ -149,7 +153,7 @@ class Cart extends Component {
                             </tbody>
                         </Table>
                     </div>
-                    <Link to="/cart/checkout"><Button variant="success">Continue to Checkout</Button></Link>
+                    <Link to="/cart/checkout"><Button onClick={this.handleSubmit} variant="success">Continue to Checkout</Button></Link>
                 </Container>
             )
         } else {
@@ -169,6 +173,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         removeFromCart: item => dispatch(removeFromCart(item)),
+        setTotal: total => dispatch(setTotal(total))
     }
 }
 

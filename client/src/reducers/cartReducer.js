@@ -3,7 +3,7 @@ import * as types from '../actions/types';
 
 const initialState = {
     items: [],
-    prices: 0,
+    totalPrice: 0
 };
 
 
@@ -20,6 +20,13 @@ function cartReducer(state = initialState, action) {
                 ...state,
                 items: state.items.filter(item => item._id !== action.id)
             }
+
+        case types.SET_TOTAL:
+            return {
+                ...state,
+                totalPrice: action.payload
+            }
+            
         default:
             return state;
     }
