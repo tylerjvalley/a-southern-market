@@ -20,8 +20,6 @@ function cartReducer(state = initialState, action) {
                 ...state,
                 items: state.items.filter(item => item._id !== action.id)
             }
-        case types.CHANGE_QUANTITY:
-            return state
         default:
             return state;
     }

@@ -10,12 +10,13 @@ import { Link } from 'react-router-dom';
 import './Cart.css';
 //redux
 import { connect } from 'react-redux';
-import { removeFromCart, changeQuantity } from '../../actions/index';
+import { removeFromCart } from '../../actions/index';
 
 class Cart extends Component {
 
     state = {
         tax: 0,
+        cart: [],
         subTotal: 0,
         total: 0,
     }
@@ -25,10 +26,12 @@ class Cart extends Component {
         let subTotal = 0;
         let total = 0;
         let tax = 3.5;
+        let cart = [];
 
         cartItems.forEach(el => {
             subTotal += el.price
-        })
+            cart.push(el)
+        });
 
         total = subTotal + tax;
 
@@ -36,25 +39,46 @@ class Cart extends Component {
              subTotal: subTotal.toFixed(2),
              total: total.toFixed(2),
              tax: tax.toFixed(2),
-        });
+             cart: cart
+        }, () => console.log(this.state.cart));
     }
 
     removeFromCart = item => {
         this.props.removeFromCart(item._id);
 
+        const price = item.price;
         let subTotal = this.state.subTotal;
         let total = this.state.total;
-        subTotal -= item.price;
-        total -= item.price;
+        subTotal -= price;
+        total -= price;
+
+        //remove from cart.js state
+        const id = item._id;
+        const updatedCart = this.state.cart.filter(cart => cart._id !== id);
+
+        this.setState({
+            subTotal: subTotal.toFixed(2),
+            total: total.toFixed(2),
+            cart: updatedCart
+        }, () => console.log(this.state.cart))
+        
+    }
+
+    handleQuantity = (item, e) => {
+    
+        let subTotal = this.state.subTotal, total = this.state.total, price; 
+        price = item.price;
+
+        price *= e.target.value;
+
+        subTotal = parseFloat(subTotal) + price
+        total = parseFloat(total) + price
+            
         this.setState({
             subTotal: subTotal.toFixed(2),
             total: total.toFixed(2)
         })
         
-    }
-
-    handleQuantity = (item, e) => {
-        this.props.changeQuantity(item._id, e.target.value)
     }
 
     render() {
@@ -145,7 +169,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         removeFromCart: item => dispatch(removeFromCart(item)),
-        changeQuantity: (id, num) => dispatch(changeQuantity(id, num)),
     }
 }
 
